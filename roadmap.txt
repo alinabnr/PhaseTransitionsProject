@@ -1,0 +1,105 @@
+Overall Objective
+
+Investigate critical slowing down and dynamic critical behavior of the 2D Ising model using:
+- Metropolis (local updates)
+- Wolff (cluster updates, with optional external field)
+- Measure magnetization, energy, and susceptibility
+- Extract autocorrelation times and the dynamic critical exponent \(z\) for both algorithms.
+
+
+Roles and	Main focus
+A – Metropolis lead
+  * Implement and run the Metropolis algorithm with optional field.
+  * Implementation, data generation (M, E, χ), autocorrelation analysis for Metropolis.
+B – Wolff lead
+  * Implement and run Wolff cluster algorithm (focus on zero field; coordinate with C for field).
+  * Cluster building, data generation, τ measurement.
+C – Wolff assistant & analysis coordinator
+  * Help implement external field in Wolff, manage susceptibility analysis & data processing for both algorithms.
+  * Adds χ analysis, final scaling fits, report integration.
+
+
+Timeline: 3 weeks
+
+Week 1 — Implementation & Verification
+Goals:
+- Implement both algorithms
+- Test on small lattices (e.g., \(L = 16, 32\))
+- Verify correctness via known results (⟨M⟩, ⟨E⟩ vs. T)
+
+Tasks
+A (Metropolis)
+  * Implement standard local Metropolis update.
+  * Validate with known energy/magnetization profiles.
+  * Implement optional external field term.
+  * Prepare scripts to measure M(t), E(t).
+B (Wolff)
+  * Implement cluster identification and flipping at h=0.
+  * Validate with ⟨M⟩(T).
+  * Calculate autocorrelation (C_M(t)).
+C (assistant)
+  * Help B include external field term in Wolff acceptance.
+  * Set up shared analysis code for autocorrelation and error estimation. 
+  * Define output data formats (JSON or CSV).
+
+Deliverables by end of Week 1:
+- Both algorithms producing valid equilibrium data.
+- M(T), E(T) curves for small lattices.
+- Working autocorrelation computation function.
+
+                                               
+Week 2 — Data Collection
+Goals:
+- Generate long simulation runs.
+- Compute ⟨M⟩, ⟨E⟩, variance for χ.
+- Begin measuring autocorrelation times τ_M and τ_E.
+- Compare algorithms qualitatively.
+
+Tasks
+A (Metropolis)
+  * Simulate at T = 2.0–2.6 in steps of 0.05.
+  * Collect M(t), E(t) for L = 16, 32, 64.
+  * Compute autocorrelation τ_M(T), τ_E(T).
+B (Wolff)
+  * Same temperature range and sizes.
+  * Record M(t) after each cluster flip.
+  * Compute τ_M(T), τ_E(T).
+C (assistant)
+  * Extract ⟨M^2⟩
+                                               
+Deliverables by end of Week 2:
+- Time series data for M, E on all L.
+- Preliminary plots of τ(T) and χ(T).
+- Confirmed agreement of Metropolis vs. Wolff equilibrium curves.
+
+                                               
+Week 3 — Scaling Analysis & Report Preparation
+Goals:
+- Perform finite-size scaling analysis.
+- Extract dynamic critical exponents.
+- Compare algorithmic efficiency.
+- Finalize presentation/plots.
+
+Tasks
+A (Metropolis)
+  * Fit τ_M(L) ∼ L^z → extract z_Metro.
+  * Compare τ_M vs. τ_E near T_c.
+  * Draft result section for Metropolis.
+B (Wolff)	• Fit τ_M(L) ∼ L^z → extract z_Wolff.
+  * Compare z values; include autocorrelation visualizations.
+  * Note computational cost per decorrelated sample.
+C (assistant)
+  * Aggregate and polish χ(T) curves, highlight χ peaks vs. T.
+  * Summarize efficiency: τ_eff = τ_int × time per sweep.
+  * Write analytical discussion + final report synthesis.
+
+Deliverables by end of Week 3:
+- Plots of τ_M(T), τ_E(T), χ(T) for each algorithm.
+- Scaling plots (log τ vs log L) → z extraction.
+
+                                               
+Expected results:
+Metropolis	~2.1
+  * Local dynamics, severe slowing down
+Wolff	~0.3
+  * Nonlocal cluster updates, much faster decorrelation
