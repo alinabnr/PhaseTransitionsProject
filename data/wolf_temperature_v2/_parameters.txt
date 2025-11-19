@@ -1,0 +1,6 @@
+Run: wolf_temperature_v2
+Lattice size: 100x100
+Interaction strength J: 1.0
+Number of steps: 100000
+Output files: data/wolf_temperature_v2_beta_*.npz
+Data: states, energys, magnetizations
