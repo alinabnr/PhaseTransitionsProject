@@ -1,7 +1,0 @@
-Run: metropolis
-Lattice size: 100x100
-Interaction strength J: 1.0
-External field h: 0.0
-Number of steps: 100000
-Output files: data/metropolis/mag_eng_beta_*.npz
-Data: energies, magnetizations
