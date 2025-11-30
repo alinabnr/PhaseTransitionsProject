@@ -1,0 +1,11 @@
+Run: metropolis_temperature_scan
+Algorithm: Metropolis with proper burn-in
+Lattice size: 100x100
+Interaction strength J: 1.0
+Number of production steps: 100000
+Burn-in: Auto-calculated (5*N^2 base, 10x near T_c)
+Critical temperature T_c: 2.269
+Critical beta beta_c: 0.4407
+Output files: data/metropolis_temperature_scan/mag_eng_beta_*.npz
+Plots: data/metropolis_temperature_scan/plots/beta_*_[timeseries|config].png
+Data: energies, magnetizations (post-burnin only)
