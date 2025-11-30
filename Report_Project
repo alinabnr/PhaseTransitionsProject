@@ -1,0 +1,76 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[a4paper, left=3cm, right=3cm, top=2.5cm, bottom=2.5cm]{geometry}
+
+
+\title{Critical Slowing Down}
+\author{Alina Benjamin and Bérénice DERAI}
+\begin{document}
+
+\maketitle
+\textbf{Abstract}\\
+\\
+This project explores critical slowing down in the two-dimensional Ising model near the critical temperature $T_c$. Using Markov chain Monte Carlo methods, we implement both the Metropolis and Wolff algorithms to generate spin configurations and measure autocorrelation times of magnetization and energy. Magnetic susceptibility is determined with an external field B, and, in the absence of the field, via the fluctuation–dissipation theorem (FDT). The scaling of relaxation times allows estimation of the dynamic critical exponent 
+z for each algorithm. Comparisons between local and cluster updates highlight their relative efficiency at criticality, showing how algorithmic choices affect the sampling of Markov chains in systems exhibiting critical slowing down and field-induced responses.
+
+\section{Introduction: Dynamic Critical Exponents and Autocorrelation Times}
+
+Understanding dynamic properties of Monte Carlo simulations requires treating the update dynamics as a stochastic process. In this framework, the time evolution of a Monte Carlo configuration is described by a Markov chain. This provides the natural foundation for defining autocorrelation functions, relaxation times, and ultimately the dynamic critical exponent~$z$.
+
+\subsection{Markov Chains and Master Equations}
+
+For relaxational models, such as the stochastic Ising model, the time-dependent
+behavior is described by a master equation
+\begin{equation}
+\frac{\partial P_n(t)}{\partial t}
+= - \sum_{n \neq m} \left[ P_n(t) W_{n \to m} - P_m(t) W_{m \to n} \right]
+\end{equation}
+
+where $P_n(t)$ is the probability of the system being in state $n$ at time $t$,
+and $W_{n \to m}$ is the transition rate for $n \to m$.
+The solution to the master equation is a sequence of states, but the time variable
+is a stochastic quantity which does not represent true time.
+A relaxation function $\phi(t)$ can be defined which describes time correlations
+\emph{within equilibrium}
+\begin{equation}
+\phi_{MM}(t)
+= \frac{\langle M(0)M(t)\rangle - \langle M \rangle^2}
+{\langle M^2 \rangle - \langle M \rangle^2}.
+\end{equation}
+
+When normalized in this way, the relaxation function is $1$ at $t = 0$ and
+decays to zero as $t \to \infty$. It is important to remember that for a system
+in equilibrium any time in the sequence of states may be chosen as the
+`$t=0$' state. The asymptotic, long time behavior of the relaxation function
+is exponential, i.e.
+\begin{equation}
+\phi(t) \to e^{-t/\tau}.
+\end{equation}
+
+where the correlation time $\tau$ diverges as $T_c$ is approached. This
+dynamic (relaxational) critical behavior can be expressed in terms of
+a power law as well,
+\begin{equation}
+\tau \propto \xi^{z} \propto \varepsilon^{-\nu z}.
+\end{equation}
+
+where $\xi$ is the (divergent) correlation length,
+$\varepsilon = |1 - T/T_c|$, and $z$ is the dynamic critical exponent.
+Estimates for $z$ have been obtained for Ising models by epsilon-expansion
+RG theory (Bausch \emph{et al.}, 1981) but the numerical estimates
+(Landau \emph{et al.}, 1988; Wansleben and Landau, 1991; Ito, 1993) are still
+somewhat inconsistent and cannot yet be used with complete confidence.
+
+A second relaxation time, the integrated relaxation time, is defined by the
+integral of the relaxation function
+\begin{equation}
+\tau_{\mathrm{int}} = \int_{0}^{\infty} \phi(t)\, dt.
+\end{equation}
+
+This quantity has particular importance for the determination of errors and
+is expected to diverge with the same dynamic exponent as the `exponential'
+relaxation time.
+
+
+
+\end{document}
