@@ -3,6 +3,7 @@ TO DO:
 
 Alina:
 1. Do simulations for L = 2, 4, 8
+2. Write summary of Metropolis (checkerboard update!)
 
 
 Benni:
