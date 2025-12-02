@@ -1,0 +1,20 @@
+TO DO:
+
+
+Alina:
+1. Do simulations for L = 2, 4, 8
+
+
+Benni:
+1. Correct Monte Carlo time for Wolff
+
+
+Berenice:
+1. Plot tau vs. system sizes L (log-log plot --> slope is exponent z) + errors at T_c
+    --> Without burn in! (first 100k sweeps for Metropolis)
+    --> Linear fit in log log
+2. Compare z for Metropolis and Wolff
+3. Calculate and plot susceptibility for non zero external field in Metropolis
+    --> Validate FDT within errors
+    --> Illustrates “symmetry breaking kills critical slowing down”, i. e. external field prevents the autocorrelation time from diverging
+    --> No critical slowing down
