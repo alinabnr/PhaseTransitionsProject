@@ -1,0 +1,144 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[a4paper, left=3cm, right=3cm, top=2.5cm, bottom=2.5cm]{geometry}
+\usepackage{amsmath}
+
+\title{Critical Slowing Down}
+\author{Alina Benjamin and Bérénice DERAI}
+\begin{document}
+
+\maketitle
+\textbf{Abstract}\\
+\\
+This project explores critical slowing down in the two-dimensional Ising model near the critical temperature $T_c$. Using Markov chain Monte Carlo methods, we implement both the Metropolis and Wolff algorithms to generate spin configurations and measure autocorrelation times of magnetization and energy. Magnetic susceptibility is determined with an external field B, and, in the absence of the field, via the fluctuation–dissipation theorem (FDT). The scaling of relaxation times allows estimation of the dynamic critical exponent 
+z for each algorithm. Comparisons between local and cluster updates highlight their relative efficiency at criticality, showing how algorithmic choices affect the sampling of Markov chains in systems exhibiting critical slowing down and field-induced responses.
+
+\section{Introduction: Dynamic Critical Exponents and Autocorrelation Times}
+
+Understanding dynamic properties of Monte Carlo simulations requires treating the update dynamics as a stochastic process. In this framework, the time evolution of a Monte Carlo configuration is described by a Markov chain. This provides the natural foundation for defining autocorrelation functions, relaxation times, and ultimately the dynamic critical exponent~$z$.
+
+\subsection{Markov Chains and Master Equations}
+
+For relaxational models, such as the stochastic Ising model, the time-dependent
+behavior is described by a master equation
+\begin{equation}
+\frac{\partial P_n(t)}{\partial t}
+= - \sum_{n \neq m} \left[ P_n(t) W_{n \to m} - P_m(t) W_{m \to n} \right]
+\end{equation}
+
+where $P_n(t)$ is the probability of the system being in state $n$ at time $t$,
+and $W_{n \to m}$ is the transition rate for $n \to m$.
+The solution to the master equation is a sequence of states, but the time variable
+is a stochastic quantity which does not represent true time.
+A relaxation function $\phi(t)$ can be defined which describes time correlations
+\emph{within equilibrium}
+\begin{equation}
+\phi_{MM}(t)
+= \frac{\langle M(0)M(t)\rangle - \langle M \rangle^2}
+{\langle M^2 \rangle - \langle M \rangle^2}.
+\end{equation}
+
+When normalized in this way, the relaxation function is $1$ at $t = 0$ and
+decays to zero as $t \to \infty$. It is important to remember that for a system
+in equilibrium any time in the sequence of states may be chosen as the
+`$t=0$' state. The asymptotic, long time behavior of the relaxation function
+is exponential, i.e.
+\begin{equation}
+\phi(t) \to e^{-t/\tau}.
+\end{equation}
+
+where the correlation time $\tau$ diverges as $T_c$ is approached. This
+dynamic (relaxational) critical behavior can be expressed in terms of
+a power law as well,
+\begin{equation}
+\tau \propto \xi^{z} \propto \varepsilon^{-\nu z}.
+\end{equation}
+
+where $\xi$ is the (divergent) correlation length,
+$\varepsilon = |1 - T/T_c|$, and $z$ is the dynamic critical exponent.
+
+A second relaxation time, the integrated relaxation time, is defined by the
+integral of the relaxation function
+\begin{equation}
+\tau_{\mathrm{int}} = \int_{0}^{\infty} \phi(t)\, dt.
+\end{equation}
+
+This quantity has particular importance for the determination of errors and
+is expected to diverge with the same dynamic exponent as the `exponential'
+relaxation time.
+
+\section{Metropolis Algorithm for the 2D Ising model}
+
+Metropolis method (\textbf{ref}) configurations are
+generated from a previous state using a transition probability which depends
+on the energy difference between the initial and final states. The states produced follows a time ordered path, and this time is not a proper time but a Monte-Carlo time. 
+For relaxational models, such as the stochastic Ising model, the time-dependent behavior is described by the master equation (1) : 
+\begin{equation}
+\frac{\partial P_n(t)}{\partial t}
+= - \sum_{n \neq m} \left[ P_n(t) W_{n \to m} - P_m(t) W_{m \to n} \right]
+\end{equation} 
+with the probability of the nth state occurring in a classical system is given by
+\[P_n = \frac{e^{-\beta E_n}}{Z}\] with Z the partition function which we don't know about. To bypass the epxression of Z, we generate a Markov chain of states, i.e. we generate each new state directly from the preceding state. If we produce the $n_{th}$ state from the $m_{th}$ state, and then calculate the
+relative probability which is the ratio of the individual probabilites, the denominator cancels. As a result, only the energy difference between the two states is needed : $\Delta E = E_n - E_m$
+
+Indeed know thanks to the master equation (1) that in equilibrium : 
+\[P_n W_{n\to m} = P_m W_{n\to m }\]
+
+Thus \[\frac{Wn\to m}{Wm\to n} = \frac{P_m}{P_n} = e^{-\beta \Delta E}\]
+
+Therefore, \[
+W_{n\to m} =
+\begin{cases}
+\tau_0^{-1} e^{-\beta \Delta E} = e^{-\beta \Delta E} & \text{si } \Delta E > 0,\\
+\tau_0^{-1} = 1 & \text{si } \Delta E \le 0.
+\end{cases}
+\]
+
+as we know that $W_{n\to m}$ is of the dimensional of 1/time and $\tau_0$ is the time required to attempt a spin-flip that we choose equal to 1. 
+
+The steps of the algorithm are as follows:
+\begin{enumerate}
+  \item Choose an initial state.
+  \item Choose a lattice site $i$.
+  \item Compute the energy change $\Delta E$ resulting from flipping the spin at site $i$.
+  \item Generate a random number $r$ such that $0 < r < 1$.
+  \item If $r < e^{-\beta \Delta E}$, flip the spin.
+  \item Move to the next site and return to step (3).
+\end{enumerate}
+
+
+
+
+\subsection{Measure of autocorrelation functions of magnetization, energy and susceptibility}
+
+\subsection{Measure of autocorrelation times near $T_c$}
+
+\subsection{Estimation of the dynamic critical exponent z}
+
+
+\section{Wolff Algorithm for the 2D Ising model}
+
+Wolff \textbf{(ref)} proposed an alternative algorithm based
+on the Fortuin–Kasteleyn theorem in which single clusters are grown and
+flipped sequentially. The algorithm begins with the random choice of
+a single site. Bonds are then drawn to all nearest neighbors which are in the
+same state with probability 
+\[p = 1-e^{-K\delta_{\sigma_i \sigma_j}}\]
+One then moves to all sites in turn which have been connected to the initial
+site and places bonds between them and any of their nearest neighbors which
+are in the same state with probability given by equation (6). The process
+continues until no new bonds are formed and the entire cluster of connected
+sites is then flipped. Another initial site is chosen and the process is then
+repeated.
+
+
+\subsection{Measure of autocorrelation functions of magnetization, energy and susceptibility}
+
+\subsection{Measure of autocorrelation times near $T_c$}
+
+\subsection{Estimation of the dynamic critical exponent z}
+
+\section{Comparison of algorithm efficiency at criticality}
+
+
+\end{document}
