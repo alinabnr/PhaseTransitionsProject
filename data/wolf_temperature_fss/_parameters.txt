@@ -1,0 +1,6 @@
+Run: wolf_temperature_fss
+Lattice size: 50x50
+Interaction strength J: 1.0
+Number of steps: 100000
+Output files: data/wolf_temperature_fss/L_50/mag_eng_beta_0.4.npz
+Data: states, energys, magnetizations, numbers_flipped_spins
