@@ -1,7 +1,11 @@
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
 \usepackage[a4paper, left=3cm, right=3cm, top=2.5cm, bottom=2.5cm]{geometry}
-\usepackage{amsmath}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}   % Pour inclure des images
+\usepackage{subcaption} % Pour créer des sous-figures
+\usepackage{capt-of}
+
 
 \title{Critical Slowing Down}
 \author{
@@ -9,17 +13,16 @@
   fc66044
   \and
   Laier Benjamin \\
-  fc 
+  fc66045
   \and 
   Derai Bérénice \\
-  fc
+  fc66034
   }
 
 \begin{document}
 
 \maketitle
 
-\newpage
 
 \begin{center}
   \textbf{Abstract}
@@ -73,6 +76,21 @@ a power law as well,
 where $\xi$ is the (divergent) correlation length,
 $\varepsilon = |1 - T/T_c|$, and $z$ is the dynamic critical exponent.
 
+In a finite system of linear size $L$, the divergence of the correlation
+length at criticality is limited by the system size. Exactly at $T_c$,
+the correlation length therefore saturates at $\xi \sim L$. Inserting
+this finite-size cutoff into the critical slowing-down relation
+$\tau \propto \xi^{z}$ gives
+\begin{equation}
+\tau_c \sim L^{z}.
+\end{equation}
+Thus, at the critical temperature, the relaxation time is no longer
+controlled by the reduced temperature $\varepsilon$, but instead by the
+system size itself. As $L$ increases, correlations require more time to
+propagate across the entire system, leading to a relaxation time that
+scales as a power law in $L$ with exponent $z$.
+
+
 A second relaxation time, the integrated relaxation time, is defined by the
 integral of the relaxation function
 \begin{equation}
@@ -123,13 +141,208 @@ The steps of the algorithm are as follows:
 \end{enumerate}
 
 
+\subsection{Single-Spin Metropolis algorithm (checkerboard) on 2D Ising Model}
+In this work we use a \emph{hot start} (random initial condition) for each run:
+the lattice spins are initialized independently to \(+1\) or \(-1\) with equal
+probability. The hot start avoids biasing the system toward a magnetized
+state and is particularly convenient when scanning temperatures around \(T_c\).
+
+We employ a single-spin \emph{Metropolis} algorithm with a checkerboard
+(updating parity) scheme. The checkerboard scheme divides the square lattice
+into two sublattices (even/odd parity) so that all spins updated in the same
+micro-step have only neighbours belonging to the opposite parity; this allows
+an explicit, conflict-free update sequence:
+\[
+\text{for parity}=0,1:\quad \text{update all sites }(i,j)\text{ with }(i+j)\bmod 2=\text{parity}.
+\]
+Periodic boundary conditions are used throughout. For a proposed flip of spin
+\(s_{i,j}\) the energy change is
+\[
+\Delta E = 2 s_{i,j} \Big( J\sum_{\langle k\rangle} s_k + h \Big),
+\]
+and the Metropolis acceptance probability is
+\[
+P_\text{accept} = \min\big(1, e^{-\beta\Delta E}\big).
+\]
+
+\subsection{Monte Carlo time, equilibration and measurements}
+The algorithm produces a time-ordered sequence of configurations; the index
+along this sequence is the \emph{Monte Carlo time} (in units of sweeps when we
+define one sweep = \(L\times L\) single-spin update attempts). Because this
+time is algorithmic rather than physical, we refer to relaxation times in
+units of Monte Carlo sweeps.
+
+Before recording measurements we perform an equilibration phase of several
+thousand sweeps (or more near \(T_c\)) to ensure the system has reached
+stationarity. After equilibration we record observables (energy, total
+magnetization) at regular intervals. The choice of recording interval should
+be made in view of the autocorrelation time (below) to reduce correlation
+between successive measurements.
 
 
-\subsection{Measure of autocorrelation functions of magnetization, energy and susceptibility}
+Plotting the energy and magnetization time series for various inverse temperatures $\beta$ allows us to verify that the system reaches equilibrium, identify enhanced fluctuations near the critical temperature $\beta_c$, and observe critical slowing down. These plots are also used to determine the appropriate \emph{burn-in} period, i.e., the number of initial sweeps to discard before measurements, and to choose suitable recording intervals between successive measurements, ensuring that the collected data are sufficiently decorrelated.
 
-\subsection{Measure of autocorrelation times near $T_c$}
 
-\subsection{Estimation of the dynamic critical exponent z}
+% Première moitié : images beta 0.1 à 0.44
+\begin{figure}[htbp]
+    \centering
+    % Row 1
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.1.png}
+        \caption{$\beta = 0.1$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.2.png}
+        \caption{$\beta = 0.2$}
+    \end{subfigure}
+
+    % Row 2
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.3.png}
+        \caption{$\beta = 0.3$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.4.png}
+        \caption{$\beta = 0.4$}
+    \end{subfigure}
+
+    % Row 3
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.41.png}
+        \caption{$\beta = 0.41$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.42.png}
+        \caption{$\beta = 0.42$}
+    \end{subfigure}
+
+    % Row 4
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.43.png}
+        \caption{$\beta = 0.43$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.44.png}
+        \caption{$\beta = 0.44$}
+    \end{subfigure}
+
+    \caption{Magnetization and Energy Time Series for $\beta = 0.1$ to $0.44$.}
+    \label{fig:mag_energy_time_series_part1}
+\end{figure}
+
+At low values of $\beta$ (high temperatures), both energy and magnetization fluctuate around mean values with relatively small amplitudes, indicating that the system is in a disordered phase and has reached equilibrium quickly. As $\beta$ approaches the critical region near $\beta_c \approx 0.44$, fluctuations in magnetization become much larger, reflecting the increased susceptibility and the onset of critical behavior. The energy time series remains relatively stable, but subtle increases in fluctuations can also be observed. Beyond $\beta_c$, magnetization tends to spend more time near nonzero values, corresponding to the emergence of spontaneous magnetization in the ordered phase. These plots also illustrate critical slowing down, as configurations near $\beta_c$ require longer Monte Carlo times to decorrelate, highlighting the need for a sufficiently long burn-in and appropriately spaced measurements.
+
+
+% Deuxième moitié : images beta 0.4407 à 0.6
+\begin{figure}[htbp]
+    \centering
+    % Row 1
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.4407.png}
+        \caption{$\beta = 0.4407$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.45.png}
+        \caption{$\beta = 0.45$}
+    \end{subfigure}
+
+    % Row 2
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.46.png}
+        \caption{$\beta = 0.46$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.47.png}
+        \caption{$\beta = 0.47$}
+    \end{subfigure}
+
+    % Row 3
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.48.png}
+        \caption{$\beta = 0.48$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.49.png}
+        \caption{$\beta = 0.49$}
+    \end{subfigure}
+
+    % Row 4
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.5.png}
+        \caption{$\beta = 0.5$}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.6.png}
+        \caption{$\beta = 0.6$}
+    \end{subfigure}
+
+    \caption{Magnetization and Energy Time Series for $\beta = 0.4407$ to $0.6$.}
+    \label{fig:mag_energy_time_series_part2}
+\end{figure}
+
+\newpage
+\subsection{Autocorrelation and integrated autocorrelation time}
+To quantify critical slowing down we compute the autocorrelation function of
+an observable \(A\) (for instance the magnetization \(M\), the energy or the susceptibility):
+\[
+C_A(t) = \langle A_{s} A_{s+t}\rangle - \langle A\rangle^2,
+\]
+and the normalized autocorrelation (autocorrelation coefficient)
+\[
+\rho_A(t) = \frac{C_A(t)}{C_A(0)}.
+\]
+A convenient scalar measure of the memory of the Markov chain is the
+\emph{integrated autocorrelation time}
+\[
+\tau_{\mathrm{int},A} = \frac{1}{2} + \sum_{t=1}^{T_{\max}} \rho_A(t),
+\]
+where the sum is truncated at a cutoff \(T_{\max}\) chosen e.g. by the window
+method (or until \(\rho_A(t)\) has decayed to noise). The statistical error
+of a sample mean \(\overline{A}\) computed from \(N\) recorded measurements
+is increased by autocorrelation; the effective sample size is \(N_\text{eff}\approx N/(2\tau_{\mathrm{int},A})\).
+
+\subsection{Extracting the dynamic exponent \(z\)}
+At criticality finite-size scaling for relaxational dynamics predicts that
+the characteristic relaxation time of the system at \(T_c\) scales with the
+linear size \(L\) as
+\[
+\tau_c(L) \propto L^{z},
+\]
+because the correlation length is cut off by the system size \(\xi\sim L\)
+and \(\tau\propto\xi^{z}\). In practice we estimate \(\tau_c(L)\) by the
+integrated autocorrelation time of the magnetization (or by the exponential
+autocorrelation time obtained from a fit of \(\rho(t)\approx e^{-t/\tau_{\exp}}\)),
+and then fit \(\log \tau_c\) versus \(\log L\) to extract \(z\):
+\[
+\log \tau_c = z \log L + \text{const}.
+\]
+
+\subsection{Susceptibility and measurement formulas}
+For a system of \(N=L^2\) spins and inverse temperature \(\beta\) the
+magnetic susceptibility at zero field is estimated from recorded
+magnetizations \(M_k\) as
+\[
+\chi = \beta N \left(\langle m^2\rangle - \langle |m|\rangle^2\right),
+\quad m=\frac{M}{N}.
+\]
+When a small nonzero external field \(h\) is present one should instead use
+\(\langle m\rangle\) (not \(\langle |m|\rangle\)) in the above variance term.
+
+\subsection{Error estimation}
+To estimate statistical uncertainties we recommend the blocking (binning)
+method: group consecutive measurements into blocks of size \(B\) (with
+\(B\gg \tau_{\mathrm{int}}\)), compute the block means and use the sample
+variance of block means to estimate the variance of the mean. The block size
+should be increased until the estimated error stabilizes.
+
 
 
 \section{Wolff Algorithm for the 2D Ising model}
