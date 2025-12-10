@@ -2,7 +2,7 @@
 
 \subsection{Equilibrium Verification}
 
-We verified equilibrium behavior by measuring $\langle E(T) \rangle$ and $\langle m(T) \rangle$ at our largest lattice size $L = 128$. The curves reproduce the expected ferromagnetic ordering at low $T$ and disordered phase at high $T$, with susceptibility peaks near $T_c$. This validates our simulation settings used for the dynamical analysis.
+We verified equilibrium behavior by measuring $\langle E(T) \rangle$ and $\langle m(T) \rangle$ at our largest lattice size $L = 128$ after the burn-in. The curves reproduce the expected ferromagnetic ordering at low $T$ and disordered phase at high $T$, with susceptibility peaks near $T_c$. This validates our simulation settings used for the dynamical analysis.
 
 \begin{figure}[h!]
     \centering
@@ -72,25 +72,32 @@ For magnetization it is qualitatively the same. Metropolis shows a clear peak ce
 
 This qualitative difference motivates our finite-size scaling of $\tau$ at $\beta_c$ to extract the dynamic exponent $z$.
 
+
 \subsection{Finite-Size Scaling and Extraction of z}
+
+For each lattice size $L$, we load the Monte Carlo time series of magnetization and energy at the critical inverse temperature $\beta_c = 0.4407$. 
+We compute the normalized autocorrelation function using an FFT-based estimator, and determine the integrated autocorrelation time $\tau_{\mathrm{int}}$ using Sokal's self-consistent windowing procedure.
+An iterative scheme is applied to automatically estimate and remove the thermalization (burn-in) period, ensuring that the remaining data satisfy $N \gg 50\,\tau_{\mathrm{int}}$. 
+The resulting autocorrelation times for each $L$ are then fitted to the expected dynamic scaling form $\tau_{\mathrm{int}}(L) \sim L^z$ in log-log scale.
+In this scale, we can fit a straight line to the data points with the slope representing the dynamic critical exponent $z$.
+This allows us to extract the dynamic critical exponent $z$ for both the magnetization and the energy via the slope. These plots can be seen in figures \ref{fig:FSSMetropolis} and \ref{fig:FSSWolff}.
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width = 0.55 \textwidth]{../plots/metropolis_fss_tau_vs_L.png}
-    \label{FSSMetropolis}
     \caption[Finite-size scaling of integrated autocorrelation times for Metropolis updates]{Finite-size scaling of integrated autocorrelation time $\tau$ versus system size $L$ at criticality $\beta_c \approx 0.4407$ for energy (blue) and magnetization (orange) using Metropolis updates.}
+    \label{fig:FSSMetropolis}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width = 0.6 \textwidth]{../plots/wolff_fss_tau_vs_L.png}
-    \label{FSSWolff}
     \caption[Finite-size scaling of integrated autocorrelation times for Wolff updates]{Finite-size scaling of integrated autocorrelation time $\tau$ versus system size $L$ at criticality $\beta_c \approx 0.4407$ for energy (blue) and magnetization (orange) using Wolff updates.}
+    \label{fig:FSSWolff}
 \end{figure}
 
 
 
-- Extract dynamic critical exponents \(z_{\text{Metropolis}}\) and \(z_{\text{Wolff}}\)**.
 
 Expected behavior:
 
