@@ -3,7 +3,7 @@
 
 \subsection{The 2D Ising Model}
 
-The two-dimensional square-lattice Ising model is a paradigmatic system for studying phase transitions and critical phenomena. Spins $s_i = \pm 1$ occupy the sites of the $L \times L$ lattice with periodic boundary conditions (PBD) and interact with their nearest neighbors. The Hamiltonian for the system is given by:
+The two-dimensional square-lattice Ising model is a paradigmatic system for studying phase transitions and critical phenomena. Spins $s_i = \pm 1$ occupy the sites of the $L \times L$ lattice with periodic boundary conditions (PBC) and interact with their nearest neighbors. The Hamiltonian for the system is given by:
 
 \begin{equation}
 H = -J \sum_{\langle i,j \rangle} s_i s_j - h \sum_i s_i,
@@ -71,8 +71,9 @@ When normalized in this way, the relaxation function is $1$ at $t = 0$ and decay
 \end{equation}
 where the correlation time $\tau$ diverges as $T_c$ is approached.
 
+
 \subsubsection{Dynamic Critical Phenomena}
-This dynamic (relaxational) critical behavior can be expressed in terms of a power law as well,
+Following \cite{LandauMonteCarlo}, the dynamic (relaxational) critical behavior can also be expressed in terms of a power law
 \begin{equation}
 \tau \propto \xi^{z} \propto \varepsilon^{-\nu z},
 \end{equation}
