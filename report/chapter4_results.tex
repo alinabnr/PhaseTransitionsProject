@@ -76,7 +76,7 @@ This qualitative difference motivates our finite-size scaling of $\tau$ at $\bet
 \subsection{Finite-Size Scaling and Extraction of z}
 
 For each lattice size $L$, we load the Monte Carlo time series of magnetization and energy at the critical inverse temperature $\beta_c = 0.4407$. 
-We compute the normalized autocorrelation function using an FFT-based estimator, and determine the integrated autocorrelation time $\tau_{\mathrm{int}}$ using Sokal's self-consistent windowing procedure.
+We compute the normalized autocorrelation function using the fast Fourier transform (FFT), and determine the integrated autocorrelation time $\tau_{\mathrm{int}}$ using Sokal's self-consistent method as described above (\ref{section:PracticalEstimators}).
 An iterative scheme is applied to automatically estimate and remove the thermalization (burn-in) period, ensuring that the remaining data satisfy $N \gg 50\,\tau_{\mathrm{int}}$. 
 The resulting autocorrelation times for each $L$ are then fitted to the expected dynamic scaling form $\tau_{\mathrm{int}}(L) \sim L^z$ in log-log scale.
 In this scale, we can fit a straight line to the data points with the slope representing the dynamic critical exponent $z$.
