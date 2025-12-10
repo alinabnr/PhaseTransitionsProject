@@ -13,7 +13,7 @@
   fc66044
   \and
   Laier Benjamin \\
-  fc66045
+  fc 
   \and 
   Derai Bérénice \\
   fc66034
@@ -39,7 +39,7 @@ Understanding dynamic properties of Monte Carlo simulations requires treating th
 \subsection{Markov Chains and Master Equations}
 
 For relaxational models, such as the stochastic Ising model, the time-dependent
-behavior is described by a master equation
+behavior is described by a master equation \cite{1}
 \begin{equation}
 \frac{\partial P_n(t)}{\partial t}
 = - \sum_{n \neq m} \left[ P_n(t) W_{n \to m} - P_m(t) W_{m \to n} \right]
@@ -103,7 +103,7 @@ relaxation time.
 
 \section{Metropolis Algorithm for the 2D Ising model}
 
-Metropolis method (\textbf{ref}) configurations are
+Metropolis method (\cite{4}) configurations are
 generated from a previous state using a transition probability which depends
 on the energy difference between the initial and final states. The states produced follows a time ordered path, and this time is not a proper time but a Monte-Carlo time. 
 For relaxational models, such as the stochastic Ising model, the time-dependent behavior is described by the master equation (1) : 
@@ -188,45 +188,45 @@ Plotting the energy and magnetization time series for various inverse temperatur
     \centering
     % Row 1
     \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.1.png}
+        \includegraphics[width=\textwidth]{magnetization_energy_series/magnetization_energy_time_series_beta0.1.png}
         \caption{$\beta = 0.1$}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.2.png}
+        \includegraphics[width=\textwidth]{magnetization_energy_series/magnetization_energy_time_series_beta0.2.png}
         \caption{$\beta = 0.2$}
     \end{subfigure}
 
     % Row 2
     \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.3.png}
+        \includegraphics[width=\textwidth]{magnetization_energy_series/magnetization_energy_time_series_beta0.3.png}
         \caption{$\beta = 0.3$}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.4.png}
+        \includegraphics[width=\textwidth]{magnetization_energy_series/magnetization_energy_time_series_beta0.4.png}
         \caption{$\beta = 0.4$}
     \end{subfigure}
 
     % Row 3
     \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.41.png}
+        \includegraphics[width=\textwidth]{magnetization_energy_series/magnetization_energy_time_series_beta0.41.png}
         \caption{$\beta = 0.41$}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.42.png}
+        \includegraphics[width=\textwidth]{magnetization_energy_series/magnetization_energy_time_series_beta0.42.png}
         \caption{$\beta = 0.42$}
     \end{subfigure}
 
     % Row 4
     \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.43.png}
+        \includegraphics[width=\textwidth]{magnetization_energy_series/magnetization_energy_time_series_beta0.43.png}
         \caption{$\beta = 0.43$}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.44.png}
+        \includegraphics[width=\textwidth]{magnetization_energy_series/magnetization_energy_time_series_beta0.44.png}
         \caption{$\beta = 0.44$}
     \end{subfigure}
 
@@ -234,53 +234,52 @@ Plotting the energy and magnetization time series for various inverse temperatur
     \label{fig:mag_energy_time_series_part1}
 \end{figure}
 
-At low values of $\beta$ (high temperatures), both energy and magnetization fluctuate around mean values with relatively small amplitudes, indicating that the system is in a disordered phase and has reached equilibrium quickly. As $\beta$ approaches the critical region near $\beta_c \approx 0.44$, fluctuations in magnetization become much larger, reflecting the increased susceptibility and the onset of critical behavior. The energy time series remains relatively stable, but subtle increases in fluctuations can also be observed. Beyond $\beta_c$, magnetization tends to spend more time near nonzero values, corresponding to the emergence of spontaneous magnetization in the ordered phase. These plots also illustrate critical slowing down, as configurations near $\beta_c$ require longer Monte Carlo times to decorrelate, highlighting the need for a sufficiently long burn-in and appropriately spaced measurements.
-
-
+At low values of $\beta$ (high temperatures), both energy and magnetization fluctuate around mean values with relatively small amplitudes, indicating that the system is in a disordered phase and has reached equilibrium quickly. As $\beta$ approaches the critical region near $\beta_c \approx 0.44$, the magnetization oscillates near zero, indicating a disordered, paramagnetic phase.
+\newpage
 % Deuxième moitié : images beta 0.4407 à 0.6
 \begin{figure}[htbp]
     \centering
     % Row 1
     \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.4407.png}
+        \includegraphics[width=\textwidth]{magnetization_energy_series/magnetization_energy_time_series_beta0.4407.png}
         \caption{$\beta = 0.4407$}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.45.png}
+        \includegraphics[width=\textwidth]{magnetization_energy_series/magnetization_energy_time_series_beta0.45.png}
         \caption{$\beta = 0.45$}
     \end{subfigure}
 
     % Row 2
     \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.46.png}
+        \includegraphics[width=\textwidth]{magnetization_energy_series/magnetization_energy_time_series_beta0.46.png}
         \caption{$\beta = 0.46$}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.47.png}
+        \includegraphics[width=\textwidth]{magnetization_energy_series/magnetization_energy_time_series_beta0.47.png}
         \caption{$\beta = 0.47$}
     \end{subfigure}
 
     % Row 3
     \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.48.png}
+        \includegraphics[width=\textwidth]{magnetization_energy_series/magnetization_energy_time_series_beta0.48.png}
         \caption{$\beta = 0.48$}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.49.png}
+        \includegraphics[width=\textwidth]{magnetization_energy_series/magnetization_energy_time_series_beta0.49.png}
         \caption{$\beta = 0.49$}
     \end{subfigure}
 
     % Row 4
     \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.5.png}
+        \includegraphics[width=\textwidth]{magnetization_energy_series/magnetization_energy_time_series_beta0.5.png}
         \caption{$\beta = 0.5$}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.45\textwidth}
-        \includegraphics[width=\textwidth]{magnetization_energy_time_series_beta0.6.png}
+        \includegraphics[width=\textwidth]{magnetization_energy_series/magnetization_energy_time_series_beta0.6.png}
         \caption{$\beta = 0.6$}
     \end{subfigure}
 
@@ -288,8 +287,13 @@ At low values of $\beta$ (high temperatures), both energy and magnetization fluc
     \label{fig:mag_energy_time_series_part2}
 \end{figure}
 
+At the critical point $\beta$  = 0.4407, the energy fluctuates around higher values and the magnetization oscillates near zero, indicating a disordered, paramagnetic phase. As $\beta$ increases, the energy quickly stabilizes at lower values and the magnetization converges to a non-zero value, reflecting the onset of an ordered, ferromagnetic phase. Near the critical region (e.g., $\beta \approx 0.45$--$0.48$), magnetization exhibits abrupt flips, characteristic of critical slowing down. These series illustrate the expected transition from disorder to order in the Ising model under Metropolis dynamics.
+These plots also illustrate critical slowing down, as configurations near $\beta_c$ require longer Monte Carlo times to decorrelate, highlighting the need for a sufficiently long burn-in and appropriately spaced measurements.
+
+
+
 \newpage
-\subsection{Autocorrelation and integrated autocorrelation time}
+\subsection{Autocorrelation and integrated autocorrelation time for magnetization and energy}
 To quantify critical slowing down we compute the autocorrelation function of
 an observable \(A\) (for instance the magnetization \(M\), the energy or the susceptibility):
 \[
@@ -305,9 +309,7 @@ A convenient scalar measure of the memory of the Markov chain is the
 \tau_{\mathrm{int},A} = \frac{1}{2} + \sum_{t=1}^{T_{\max}} \rho_A(t),
 \]
 where the sum is truncated at a cutoff \(T_{\max}\) chosen e.g. by the window
-method (or until \(\rho_A(t)\) has decayed to noise). The statistical error
-of a sample mean \(\overline{A}\) computed from \(N\) recorded measurements
-is increased by autocorrelation; the effective sample size is \(N_\text{eff}\approx N/(2\tau_{\mathrm{int},A})\).
+method (or until \(\rho_A(t)\) has decayed to noise).
 
 \subsection{Extracting the dynamic exponent \(z\)}
 At criticality finite-size scaling for relaxational dynamics predicts that
@@ -317,24 +319,27 @@ linear size \(L\) as
 \tau_c(L) \propto L^{z},
 \]
 because the correlation length is cut off by the system size \(\xi\sim L\)
-and \(\tau\propto\xi^{z}\). In practice we estimate \(\tau_c(L)\) by the
-integrated autocorrelation time of the magnetization (or by the exponential
-autocorrelation time obtained from a fit of \(\rho(t)\approx e^{-t/\tau_{\exp}}\)),
+and \(\tau\propto\xi^{z}\). We estimate \(\tau_c(L)\) by the
+integrated autocorrelation time of the magnetization (\textbf{explain why}),
 and then fit \(\log \tau_c\) versus \(\log L\) to extract \(z\):
 \[
 \log \tau_c = z \log L + \text{const}.
 \]
 
-\subsection{Susceptibility and measurement formulas}
-For a system of \(N=L^2\) spins and inverse temperature \(\beta\) the
-magnetic susceptibility at zero field is estimated from recorded
-magnetizations \(M_k\) as
+\subsection{Susceptibility}
+For a system of \(N=L^2\) spins at zero field is estimated from recorded
+magnetizations \(M_k\) with the FDT, Fluctuation-Dissipation Theorem: 
 \[
-\chi = \beta N \left(\langle m^2\rangle - \langle |m|\rangle^2\right),
-\quad m=\frac{M}{N}.
+\chi = \frac{1}{k_B T} \left( \langle M^2 \rangle - \langle M \rangle^2 \right)
 \]
-When a small nonzero external field \(h\) is present one should instead use
-\(\langle m\rangle\) (not \(\langle |m|\rangle\)) in the above variance term.
+
+
+We also add a small nonzero external field \(h_0\) and we use the finite-difference estimate: 
+\[
+\chi = \frac{1}{2h_0} \left( \langle M \rangle_{+h_0} - \langle M \rangle_{-h_0}\right)
+\]
+ 
+with matched burn-in across the $\pm h_0$ runs for each $\beta$
 
 \subsection{Error estimation}
 To estimate statistical uncertainties we recommend the blocking (binning)
@@ -345,29 +350,120 @@ should be increased until the estimated error stabilizes.
 
 
 
-\section{Wolff Algorithm for the 2D Ising model}
+\section{Wolff Algorithm for the 2D Ising Model}
+
 
 Wolff \textbf{(ref)} proposed an alternative algorithm based
 on the Fortuin–Kasteleyn theorem in which single clusters are grown and
 flipped sequentially. The algorithm begins with the random choice of
 a single site. Bonds are then drawn to all nearest neighbors which are in the
 same state with probability 
-\[p = 1-e^{-K\delta_{\sigma_i \sigma_j}}\]
+\[
+p = 1-e^{-K\delta_{\sigma_i \sigma_j}}
+\]
 One then moves to all sites in turn which have been connected to the initial
 site and places bonds between them and any of their nearest neighbors which
 are in the same state with probability given by equation (6). The process
 continues until no new bonds are formed and the entire cluster of connected
 sites is then flipped. Another initial site is chosen and the process is then
 repeated.
+\\
+\\
+A single Wolff cluster update consists of the following steps:
+    \begin{enumerate}
+        \item Randomly select a seed spin from the lattice.
+        \item Grow a cluster by adding neighboring spins with the same orientation with probability $p_{\text{add}} = 1 - \exp(-2 \beta J)$, where $J$ is the nearest-neighbor coupling and $\beta = 1/T$ is the inverse temperature.
+        \item Repeat the cluster growth iteratively for all new cluster members until no further spins are added.
+        \item Flip all spins in the cluster simultaneously.
+    \end{enumerate}
+Depth-first search is used to traverse and grow the cluster efficiently. DFS avoids revisiting the same spins multiple times, making the algorithm fast even for very large clusters.
+\\
+\\
+\textbf{Assumptions in our code:} \\
+\\
+- The initial configuration is the same that we did for Metropolis i.e. hot start : random, with spins sampled uniformly from $\{-1, +1\}$.\\
+\\
+- Periodic boundary conditions are applied in both directions, allowing each spin to interact with four nearest neighbors regardless of its position on the lattice.\\
+\\
+- Interactions are limited to nearest neighbors with uniform coupling strength $J$.\\
+\\
+- The algorithm assumes ergodicity and sufficient equilibration to sample the canonical ensemble.\\
 
 
-\subsection{Measure of autocorrelation functions of magnetization, energy and susceptibility}
 
-\subsection{Measure of autocorrelation times near $T_c$}
+\subsection{Monte Carlo time, equilibration and measurements}
+The Monte Carlo time was rescaled for the Wolff algorithm using the mean number of lipped clusters $\langle C \rangle$ per step:
+\begin{equation}
+    \Delta t = \frac{\langle C\rangle}{L^2}, \quad
+    t_\text{MC} = \sum \Delta t
+\end{equation}
+This makes the Wolff steps comparable to a full Metropolis sweep.
+\\
+\\
+Time series of energy $E$, magnetization $M$, absolute magnetization $|M|$, and squared magnetization $M^2$ were analyzed for each $\beta$ to study fluctuations and equilibrium behavior.
 
-\subsection{Estimation of the dynamic critical exponent z}
+\subsection{Autocorrelation and integrated autocorrelation time for magnetization and energy}
+
+
+As we saw for the Metropolis algorithm, to quantify critical slowing down we compute the autocorrelation function of an observable \(A\) (for instance the magnetization \(M\), the energy or the susceptibility):
+\[
+C_A(t) = \langle A_{s} A_{s+t}\rangle - \langle A\rangle^2,
+\]
+and the normalized autocorrelation (autocorrelation coefficient)
+\[
+\rho_A(t) = \frac{C_A(t)}{C_A(0)}.
+\]
+
+with the convenient scalar measure of the memory of the Markov chain i.e. the
+\emph{integrated autocorrelation time}
+\[
+\tau_{\mathrm{int},A} = \frac{1}{2} + \sum_{t=1}^{T_{\max}} \rho_A(t),
+\]
+
+
+
+\subsection{Extracting the dynamic exponent \(z\)}
+
+As we saw previously, at criticality finite-size scaling for relaxational dynamics we can fit \(\log \tau_c\) versus \(\log L\) to extract \(z\):
+\[
+\log \tau_c = z \log L + \text{const}.
+\]
+
+
+
+\subsection{Susceptibility}
+
+Magnetic susceptibility $\chi$ is computed using the fluctuation-dissipation theorem:
+\begin{equation}
+    \chi = \beta \left( \langle |M|^2 \rangle - \langle |M| \rangle^2 \right),
+\end{equation}
+where $M$ is the total magnetization and $\beta = 1/(k_B T)$. The absolute value of $M$ is used because, in the absence of an external magnetic field ($H=0$), the system is symmetric under spin inversion ($M \leftrightarrow -M$). As a result, the thermal average $\langle M \rangle$ vanishes even below the critical temperature $T_c$, despite the presence of spontaneous magnetization. Taking the absolute value ensures that the measured fluctuations reflect the true magnetic behavior of the system, avoiding artificial cancellation due to symmetry. Hence, $\langle |M| \rangle$ provides a physically meaningful estimate of the net magnetization and its fluctuations.
+
+
+
 
 \section{Comparison of algorithm efficiency at criticality}
 
+
+\begin{thebibliography}{10}
+\bibitem{1}
+A Guide to Monte Carlo Simulations in Statistical Physics, -- David P. Landau, Kurt Binder -- 2nd ed, Cambridge, UK, New York, England, 2005
+
+\bibitem{2}
+COMPLEXITY AND CRITICALITY (Imperial College Press Advanced -- Kim Christensen, Nicholas R. Moloney -- Imperial College Press advanced physics texts
+
+\bibitem{3}
+“Monte Carlo Methods in Statistical Mechanics: Foundations and New Algorithms”, Sokal (1997).
+
+\bibitem{4}
+Metropolis et al., 1953 – “Equation of State Calculations by Fast Computing Machines”
+
+
+
+
+
+
+
+\end{thebibliography}
 
 \end{document}
