@@ -15,20 +15,24 @@ Temperature range:
     \item We scan a window around the exact critical point $\beta_c = 0.4407$, namely
     
     \begin{center}
-        $\beta \in [0.1, 0.2, 0.3, 0.4, 0.41, 0.42, 0.43, 0.44, 0.4407, 0.45, 0.46, 0.47, 0.48, 0.49, 0.5, 0.6]$
+        $\beta \in [0.1, 0.2, 0.3, 0.4, 0.41, 0.42, 0.43, 0.44, 0.4407, 0.45, 0.46, 0.47, 0.48, 0.49, 0.5, 0.6]$.
     \end{center}
+
+    For the Wolff algorithm, we also included $\beta = 1$.
+
     \item For finite-size scaling at $T_c$, we fix $\beta = \beta_c$ and vary L.
 \end{itemize}
 
 Initialization:
 \begin{itemize}
-    \item Hot (spins initialized independently to ±1 with equal probability) and cold (all spins $+1$) starts with equal probability.
+    \item Hot starts, i. e. spins initialized independently to $\pm 1$ with equal probability.
+    \item Burn-in was excluded via visual examination in time series of energy and magnetization.
 \end{itemize}
 
 Time units:
 \begin{itemize}
     \item Metropolis: one Monte Carlo sweep (MCS) = N single-spin flip attempts.
-    \item Wolff: one Wolff step = one cluster flip; to compare time scales, we define “Wolff sweeps” by accumulating flipped spins until the total equals N on average.
+    \item Wolff: one Wolff step = one cluster flip; to compare time scales, we define `Wolff sweeps' such that on average $N$ spins are flipped in one sweep, as detailed in section \ref{section:WolffAlgo}.
 \end{itemize}
 
 Observables:
@@ -44,52 +48,50 @@ Metropolis method \cite{Metropolis} configurations are
 generated from a previous state using a transition probability which depends
 on the energy difference between the initial and final states. The states produced follows a time ordered path, and this time is not a proper time but a Monte-Carlo time. 
 For relaxational models, such as the stochastic Ising model, the time-dependent behavior is described by the master equation \ref{equ:MasterEqu}, with the probability of the nth state occurring in a classical system is given by
-$P_n = \frac{e^{-\beta E_n}}{Z}$ with Z the partition function which we don't know about. To bypass the expression of Z, we generate a Markov chain of states, i.e. we generate each new state directly from the preceding state. If we produce the $n_{th}$ state from the $m_{th}$ state, and then calculate the
-relative probability which is the ratio of the individual probabilities, the denominator cancels. As a result, only the energy difference between the two states is needed : $\Delta E = E_n - E_m$
+$P_n = \frac{e^{-\beta E_n}}{Z}$ with the partition function Z which we don't know. To bypass the expression of Z, we generate a Markov chain of states, i.e. we generate each new state directly from the preceding state. If we produce the $n_{th}$ state from the $m_{th}$ state, and then calculate the
+relative probability which is the ratio of the individual probabilities, the denominator cancels. As a result, only the energy difference between the two states is needed: $\Delta E = E_n - E_m$.
 
-Indeed know thanks to the master equation that in equilibrium 
-$P_n W_{n\to m} = P_m W_{m\to n }$.
+Now thanks to the master equation in equilibrium 
+$P_n W_{n\to m} = P_m W_{m\to n }$:
 
-Thus 
 \begin{equation}
-    \frac{Wn\to m}{Wm\to n} = \frac{P_m}{P_n} = e^{-\beta \Delta E},
+    \frac{Wn\to m}{Wm\to n} = \frac{P_m}{P_n} = e^{-\beta \Delta E}.
 \end{equation}
 
-and therefore,
+Thus
 
 \begin{equation}
-W_{n\to m} =
+P_{n\to m} =
 \begin{cases}
-\tau_0^{-1} e^{-\beta \Delta E} = e^{-\beta \Delta E} & \text{for } \Delta E > 0,\\
-\tau_0^{-1} = 1 & \text{for } \Delta E \le 0.
+e^{-\beta \Delta E} & \text{for } \Delta E > 0 \\
+1 & \text{for } \Delta E \le 0
 \end{cases}
 \end{equation}
 
-as we know that $W_{n\to m}$ is of the dimensional of 1/time and $\tau_0$ is the time required to attempt a spin-flip that we choose equal to 1. 
-
-The steps of the algorithm are as follows:
+The steps of the algorithm are as follows \cite{CompAndCrit}:
 \begin{enumerate}
   \item Choose an initial state.
-  \item Choose a lattice site $i$.
+  \item Choose a lattice site $i$ randomly.
   \item Compute the energy change $\Delta E$ resulting from flipping the spin at site $i$.
-  \item Generate a random number $r$ such that $0 < r < 1$.
+  \item Generate a random number $0 < r < 1$.
   \item If $r < e^{-\beta \Delta E}$, flip the spin.
   \item Move to the next site and return to step (3).
 \end{enumerate}
 
-\subsubsection{Wolff (cluster)}
 
-Wolff proposed an alternative algorithm based on the Fortuin-Kasteleyn theorem in which single clusters are grown and flipped sequentially. The algorithm begins with the random choice of a single site. Bonds are then drawn to all nearest neighbors which are in the same state with probability 
+\subsubsection{Wolff (cluster)} \label{section:WolffAlgo}
+
+Wolff (\cite{WolffOGPaper}) proposed an alternative algorithm based on the Fortuin-Kasteleyn theorem in which single clusters are grown and flipped sequentially. The algorithm begins with the random choice of a single site. Bonds are then drawn to all nearest neighbors which are in the same state with probability 
 \begin{equation} \label{equ:WolffProb}
     p = 1-e^{-K\delta_{\sigma_i \sigma_j}}.
 \end{equation}
-One then moves to all sites in turn which have been connected to the initial
+One then moves to all sites which have been connected to the initial
 site and places bonds between them and any of their nearest neighbors which
 are in the same state with probability given by equation \ref{equ:WolffProb}. The process
 continues until no new bonds are formed and the entire cluster of connected
 sites is then flipped. Another initial site is chosen and the process is then
 repeated.
-A single Wolff cluster update consists of the following steps:
+A single Wolff cluster update consists of the following steps \cite{LandauMonteCarlo}:
     \begin{enumerate}
         \item Randomly select a seed spin from the lattice.
         \item Grow a cluster by adding neighboring spins with the same orientation with probability $p_{\text{add}} = 1 - \exp(-2 \beta J)$, where $J$ is the nearest-neighbor coupling and $\beta = 1/T$ is the inverse temperature.
@@ -98,7 +100,7 @@ A single Wolff cluster update consists of the following steps:
     \end{enumerate}
 Depth-first search is used to traverse and grow the cluster efficiently. DFS avoids revisiting the same spins multiple times, making the algorithm fast even for very large clusters.
 
-The Monte Carlo time was rescaled for the Wolff algorithm using the mean number of flipped clusters $\langle C \rangle$ per step:
+The Monte Carlo time was rescaled for the Wolff algorithm using the mean number of flipped clusters $\langle C \rangle$ per step \cite{LandauMonteCarlo}:
 \begin{equation}
     \Delta t = \frac{\langle C\rangle}{L^2}, \quad
     t_\text{MC} = \sum \Delta t
