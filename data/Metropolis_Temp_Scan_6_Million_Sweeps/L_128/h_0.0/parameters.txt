@@ -1,0 +1,8 @@
+Lattice size: 128x128
+Interaction strength J: 1.0
+External field h: 0.0
+Number of sweeps (steps = sweeps * L * L): 6000000
+Record interval: 1
+Output directory: data/Metropolis_Temp_Scan_6_Million_Sweeps/L_128/h_0.0
+Data saved as: mag_eng_beta_*.npz
+Contents: energies, magnetizations
