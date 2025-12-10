@@ -98,6 +98,13 @@ A single Wolff cluster update consists of the following steps:
     \end{enumerate}
 Depth-first search is used to traverse and grow the cluster efficiently. DFS avoids revisiting the same spins multiple times, making the algorithm fast even for very large clusters.
 
+The Monte Carlo time was rescaled for the Wolff algorithm using the mean number of flipped clusters $\langle C \rangle$ per step:
+\begin{equation}
+    \Delta t = \frac{\langle C\rangle}{L^2}, \quad
+    t_\text{MC} = \sum \Delta t
+\end{equation}
+This makes the Wolff steps comparable to a full Metropolis sweep.
+Time series of energy $E$, magnetization $M$, absolute magnetization $|M|$, and squared magnetization $M^2$ were analyzed for each $\beta$ to study fluctuations and equilibrium behavior.
 
 \subsection{Practical Estimators and Extraction of z}
 
