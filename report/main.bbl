@@ -4,4 +4,7 @@
 ``Square lattice ising model.'' Wikipedia, 2025.
 \newblock Accessed on: December 10, 2025.
 
+\bibitem{Metropolis}
+N.~Metropolis, A.~W. Rosenbluth, M.~N. Rosenbluth, A.~H. Teller, and E.~Teller, ``{Equation of State Calculations by Fast Computing Machines Available to Purchase},'' {\em The Journal of Chemical Physics}, vol.~21, 1953.
+
 \end{thebibliography}
