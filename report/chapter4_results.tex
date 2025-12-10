@@ -22,8 +22,8 @@ In figures \ref{fig:MetropolisEvsBeta} and \ref{fig:WolffEvsBeta} we can see tha
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width = 0.6 \textwidth]{../plots/metropolis_mag_vs_beta_xlog.png}
-    \caption[Magnetization versus $\beta$ using Metropolis updates]{Magnetization versus inverse temperature $\beta$ using Metropolis updates. Points show the equilibrium average magnetization. The red dashed line indicates the critical value $\beta_c$.}
+    \includegraphics[width = 0.6 \textwidth]{../plots/metropolis_abs_mag_vs_beta_xlog.png}
+    \caption[Absolute magnetization versus $\beta$ using Metropolis updates]{Absolute magnetization versus inverse temperature $\beta$ using Metropolis updates. Points show the equilibrium average magnetization. The red dashed line indicates the critical value $\beta_c$.}
     \label{fig:MetropolisMvsBeta}
 \end{figure}
 
@@ -43,6 +43,33 @@ Magnetization plots in figures \ref{fig:MetropolisMvsBeta} and \ref{fig:WolffMvs
     \label{fig:MetropolisSuscVsBeta}
 \end{figure}
 
+The peak of the susceptibility in figure \ref{fig:MetropolisSuscVsBeta} near $\beta_c$ reflects the divergence of \(\chi\) at the phase transition, which proves the second-order phase transitions. Before \(\beta_c\) (high temperatures, \(T > T_c\)), \(\chi\) the system is in the paramagnetic phase, spins are disordered and fluctuations are small, after $\beta$ the system is in the ferromagnetic phase, most spins are aligned, so fluctuations of the total magnetization decrease.
+
+The maximum susceptibility is very high, which is typical for finite-size systems simulated with Metropolis: the peak would diverge in the thermodynamic limit. Small fluctuations for low \(\beta\) (high \(T\)) are expected because the system behaves almost like independent spins.
+The asymmetry of the peak is also visible: the high-\(\beta\) side (low \(T\)) decays more slowly than the low-\(\beta\) side, consistent with finite-size effects and critical slowing down in Metropolis simulations.
+
+Then we can compare the value of the susceptibility with the FDT and with a small non zero external field. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\linewidth]{../susceptibility_ext_field_metropolis.png}
+    \caption{Susceptibility as a function of $\beta$ with small external field. The red dashed line indicates the critical value $\beta_c$.}
+    \label{fig:susceptibility_beta}
+\end{figure}
+
+The susceptibility obtained from the fluctuation--dissipation theorem (FDT) and the one
+computed using a small external field are different near the critical point.
+In our plot, the field $h_0 = 0.002$ turns out to be too large near the 
+critical point: it suppresses the true divergence of 
+$\chi$, producing the plateau observed for $\beta > \beta_c$. This cutoff effect is enhanced 
+by finite-size limitations, which also prevent the susceptibility from diverging. As a 
+result, both estimators are consistent away from criticality, but the finite-field approach 
+underestimates the critical behaviour unless $h$ is reduced by several orders of magnitude.
+However, using a small external field provides a more controlled and numerically stable way to measure the susceptibility. 
+It fixes the direction of the magnetization, avoids symmetry-related cancellations, and gives a direct estimate of the response $\partial M/\partial h$.
+
+Near the critical temperature, the magnetic susceptibility $\chi$ is highly sensitive to the efficiency of the Monte Carlo algorithm. In simulations using the Metropolis method, which updates one spin at a time, large correlated clusters evolve very slowly, causing successive configurations to remain strongly correlated. This results in an artificial amplification of magnetization fluctuations, with the peak susceptibility reaching exceedingly high values on the order of $10^7$. By contrast, the Wolff algorithm flips entire clusters of spins in a single update, efficiently breaking long-range correlations and producing largely independent configurations. Consequently, the susceptibility obtained with Wolff is significantly lower, with its peak around $10^{-2}$.
+
 \begin{figure}[h!]
     \centering
     \includegraphics[width = 0.6 \textwidth]{../plots/wolff_susc_vs_beta_loglog.png}
@@ -50,8 +77,7 @@ Magnetization plots in figures \ref{fig:MetropolisMvsBeta} and \ref{fig:WolffMvs
     \label{fig:WolffSuscVsBeta}
 \end{figure}
 
-Susceptibility plots in figures \ref{fig:MetropolisSuscVsBeta} and \ref{fig:WolffSuscVsBeta} exhibit clear peaks near $T_c$ for both algorithms, indicating critical fluctuations as expected.
-It is to be noted that we plotted the susceptibility computed from the absolute magnetization $|M|$ rather than $M$ itself, which prevents sector cancellations, as due to $\mathbb{Z}_2$ symmetry finite systems flip between magnetized sectors. This yields the standard finite-size peak near $\beta_c$.
+It is to be noted that for the Wolff algorithm, we plotted the susceptibility computed from the absolute magnetization $|M|$ rather than $M$ itself, which prevents sector cancellations, as due to $\mathbb{Z}_2$ symmetry finite systems flip between magnetized sectors. This yields the standard finite-size peak near $\beta_c$.
 That choice does not affect our determination of $T_c$ or the scaling analysis.
 
 
@@ -96,16 +122,10 @@ This allows us to extract the dynamic critical exponent $z$ for both the magneti
     \label{fig:FSSWolff}
 \end{figure}
 
-The extracted dynamic exponents show a stark algorithmic contrast. For Metropolis we find $z_M \approx 2.03 \pm 0.03$ (magnetization) and $z_E \approx 1.39 \pm 0.06$ (energy). The magnetization result is close to the expected $z \approx 2.1$ (\cite{Adzhemyan2022}) for local dynamics, while the energy-based estimate is noticeably lower, reflecting that $\tau_E$ is harder to measure reliably, because energy time series have smaller signal-to-noise, broader multi-time-scale structure, and stronger finite-size/systematic effects near $\beta_c$, whereas magnetization directly probes the slow order-parameter mode that controls critical relaxation.
+The dynamic exponents show a stark algorithmic contrast. For Metropolis we find $z_M \approx 2.03 \pm 0.03$ (magnetization) and $z_E \approx 1.39 \pm 0.06$ (energy). The magnetization result is close to the expected $z \approx 2.1$ (\cite{Adzhemyan2022}) for local dynamics, while the energy-based estimate is noticeably lower, reflecting that $\tau_E$ is harder to measure reliably, because energy time series have smaller signal-to-noise, and stronger finite-size/systematic effects near $\beta_c$, whereas magnetization directly probes the slow order-parameter mode that controls critical relaxation.
 For Wolff, $z_M \approx 0.217 \pm 0.035$ and $z_E \approx 0.367 \pm 0.021$ both indicate a dramatic suppression of critical slowing down. The magnetization-based value lies within the expected $0 - 0.3$ range, while the energy-based value is somewhat higher, again consistent with noisier $\tau_E$ estimates and the fact that cluster flips most efficiently decorrelate the order parameter, leaving residual shorter scales in energy. Overall, $M$ provides the more reliable estimator of z for both algorithms, with E tending to bias low for Metropolis and high for Wolff due to noise and mixed time scales.
-
-
-
 
 
 \subsection{Comparison of Algorithm Efficiency}
 
-- Compare CPU time per independent sample.
-
-- Discuss how cluster algorithms reduce critical slowing down.
-
+The Wolff algorithm drastically reduces critical slowing down by updating large groups of spins simultaneously rather than flipping spins individually as in local-update methods like Metropolis. Near the critical temperature, the system develops large clusters of correlated spins, which evolve very slowly under single-spin updates, leading to long autocorrelation times and artificially large fluctuations in observables such as magnetization. This is evidenced in Metropolis simulations, where the integrated autocorrelation time for energy peaks at $\tau_{\rm int} \approx 207$ and for magnetization at $\tau_{\rm int} \approx 10{,}949$ near $\beta_c$, indicating very slow relaxation. Consequently, the susceptibility is also overestimated, reaching values as high as $10^7$. In contrast, cluster updates flip entire clusters of spins in a single move, effectively breaking long-range correlations and producing largely independent successive configurations. This results in drastically reduced autocorrelation times—$\tau_{\rm int} \approx 2.94$ for energy and $\tau_{\rm int} \approx 1.59$ for magnetization at $\beta_c$—and a realistic estimation of susceptibility with a peak around $10^{-2}$. By efficiently decorrelating the system, cluster algorithms suppress critical slowing down and allow for faster convergence near the phase transition.
