@@ -8,46 +8,56 @@ We verified equilibrium behavior by measuring $\langle E(T) \rangle$ and $\langl
     \centering
     \includegraphics[width = 0.6 \textwidth]{../plots/metropolis_energy_vs_beta_xlog.png}
     \caption[Energy per spin versus $\beta$ using Metropolis updates]{Energy per spin versus $\frac{\langle E \rangle}{N}$ inverse temperature $\beta$ for the 2D Ising model using Metropolis updates. Points show the equilibrium average energy.}
+    \label{fig:MetropolisEvsBeta}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width = 0.6 \textwidth]{../plots/wolff_energy_vs_beta_xlog.png}
     \caption[Energy per spin versus $\beta$ using Wolff updates]{Energy per spin versus $\frac{\langle E \rangle}{N}$ inverse temperature $\beta$ for the 2D Ising model using Wolff updates. Points show the equilibrium average energy.}
+    \label{fig:WolffEvsBeta}
 \end{figure}
 
-We can see that for both algorithms, as $\beta$ increases, $\frac{\langle E \rangle}{N}$ decreases smoothly and exhibits a pronounced change in slope near the critical $\beta_c \approx 0.4407$ (vertical reference line).
+In figures \ref{fig:MetropolisEvsBeta} and \ref{fig:WolffEvsBeta} we can see that for both algorithms, as $\beta$ increases, $\frac{\langle E \rangle}{N}$ decreases smoothly and exhibits a pronounced change in slope near the critical $\beta_c \approx 0.4407$ (vertical reference line).
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width = 0.6 \textwidth]{../plots/metropolis_mag_vs_beta_xlog.png}
-    \caption[Magnetization versus $\beta$ using Metropolis updates]{Magnetization versus inverse temperature $\beta$ using Metropolis updates. Points show the equilibrium average magnetization.}
+    \caption[Magnetization versus $\beta$ using Metropolis updates]{Magnetization versus inverse temperature $\beta$ using Metropolis updates. Points show the equilibrium average magnetization. The red dashed line indicates the critical value $\beta_c$.}
+    \label{fig:MetropolisMvsBeta}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width = 0.6 \textwidth]{../plots/wolff_mag_vs_beta_xlog.png}
     \caption[Magnetization versus $\beta$ using Wolff updates]{Magnetization versus inverse temperature $\beta$ using Wolff updates. Points show the equilibrium average magnetization.}
+    \label{fig:WolffMvsBeta}
 \end{figure}
 
-Magnetization plots show the expected spontaneous magnetization below $T_c$ and decay to zero above $T_c$ for both algorithms, confirming correct equilibrium sampling.
+Magnetization plots in figures \ref{fig:MetropolisMvsBeta} and \ref{fig:WolffMvsBeta} show the expected spontaneous magnetization below $T_c$ and decay to zero above $T_c$ for both algorithms, confirming correct equilibrium sampling.
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width = 0.6 \textwidth]{../plots/metropolis_susc_vs_beta_loglog.png}
     \caption[Susceptibility versus $\beta$ using Metropolis updates]{Susceptibility versus inverse temperature $\beta$ using Metropolis updates. Points show the equilibrium susceptibility computed via fluctuation-dissipation theorem.}
+    \label{fig:MetropolisSuscVsBeta}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width = 0.6 \textwidth]{../plots/wolff_susc_vs_beta_loglog.png}
     \caption[Susceptibility versus $\beta$ using Wolff updates]{Susceptibility versus inverse temperature $\beta$ using Wolff updates. Points show the equilibrium susceptibility computed via fluctuation-dissipation theorem.}
+    \label{fig:WolffSuscVsBeta}
 \end{figure}
 
-Susceptibility plots exhibit clear peaks near $T_c$ for both algorithms, indicating critical fluctuations as expected.
-
+Susceptibility plots in figures \ref{fig:MetropolisSuscVsBeta} and \ref{fig:WolffSuscVsBeta} exhibit clear peaks near $T_c$ for both algorithms, indicating critical fluctuations as expected.
+It is to be noted that we plotted the susceptibility computed from the absolute magnetization $|M|$ rather than $M$ itself, which prevents sector cancellations, as due to $\mathbb{Z}_2$ symmetry finite systems flip between magnetized sectors. This yields the standard finite-size peak near $\beta_c$.
+That choice does not affect our determination of $T_c$ or the scaling analysis.
 
 \subsection{Autocorrelation Behavior}
+
+
+
 - Show sample autocorrelation functions for Metropolis and Wolff updates.
 
 - Discuss qualitative differences: slow decay for Metropolis near \(T_c\), fast for Wolff.
