@@ -1,0 +1,30 @@
+\section{Results}
+
+\subsection{Equilibrium Verification}
+Magnetization and energy vs. temperature.
+
+\subsection{Autocorrelation Behavior}
+- Show sample autocorrelation functions for Metropolis and Wolff updates.
+
+- Discuss qualitative differences: slow decay for Metropolis near \(T_c\), fast for Wolff.
+
+\subsection{Divergence near Criticality}
+- Plot autocorrelation time \(\tau(T)\) vs. \(|T - T_c|\).
+
+- Fit \(\tau \sim |T - T_c|^{-z\nu}\) or equivalently \(\tau \sim L^{z}\) at \(T_c\) for finite-size scaling.
+
+- Extract dynamic critical exponents \(z_{\text{Metropolis}}\) and \(z_{\text{Wolff}}\)**.
+
+Expected behavior:
+
+
+- Metropolis: \(z \approx 2.1\)
+
+- Wolff: \(z \approx 0 \text{–} 0.3\)
+
+\subsection{Comparison of Algorithm Efficiency}
+
+- Compare CPU time per independent sample.
+
+- Discuss how cluster algorithms reduce critical slowing down.
+

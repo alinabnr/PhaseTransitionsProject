@@ -1,0 +1,228 @@
+\section{Dynamic Critical Exponents and Autocorrelation Times}
+
+Understanding dynamic properties of Monte Carlo simulations requires treating the update dynamics as a stochastic process. In this framework, the time evolution of a Monte Carlo configuration is described by a Markov chain. This provides the natural foundation for defining autocorrelation functions, relaxation times, and ultimately the dynamic critical exponent $z$.
+
+
+\subsection{Markov Chains and Master Equations}
+
+For relaxational models, such as the stochastic Ising model, the time-dependent
+behavior is described by a master equation
+\begin{equation}
+\frac{\partial P_n(t)}{\partial t}
+= - \sum_{n \neq m} \left[ P_n(t) W_{n \to m} - P_m(t) W_{m \to n} \right]
+\end{equation}
+
+where $P_n(t)$ is the probability of the system being in state $n$ at time $t$,
+and $W_{n \to m}$ is the transition rate for $n \to m$.
+The solution to the master equation is a sequence of states, but the time variable
+is a stochastic quantity which does not represent true time.
+A relaxation function $\phi(t)$ can be defined which describes time correlations
+\emph{within equilibrium}
+\begin{equation}
+\phi_{MM}(t)
+= \frac{\langle M(0)M(t)\rangle - \langle M \rangle^2}
+{\langle M^2 \rangle - \langle M \rangle^2}.
+\end{equation}
+
+When normalized in this way, the relaxation function is $1$ at $t = 0$ and
+decays to zero as $t \to \infty$. It is important to remember that for a system
+in equilibrium any time in the sequence of states may be chosen as the
+`$t=0$' state. The asymptotic, long time behavior of the relaxation function
+is exponential, i.e.
+\begin{equation}
+\phi(t) \to e^{-t/\tau}.
+\end{equation}
+
+where the correlation time $\tau$ diverges as $T_c$ is approached. This
+dynamic (relaxational) critical behavior can be expressed in terms of
+a power law as well,
+\begin{equation}
+\tau \propto \xi^{z} \propto \varepsilon^{-\nu z}.
+\end{equation}
+
+where $\xi$ is the (divergent) correlation length,
+$\varepsilon = |1 - T/T_c|$, and $z$ is the dynamic critical exponent.
+
+In a finite system of linear size $L$, the divergence of the correlation
+length at criticality is limited by the system size. Exactly at $T_c$,
+the correlation length therefore saturates at $\xi \sim L$. Inserting
+this finite-size cutoff into the critical slowing-down relation
+$\tau \propto \xi^{z}$ gives
+\begin{equation}
+\tau_c \sim L^{z}.
+\end{equation}
+Thus, at the critical temperature, the relaxation time is no longer
+controlled by the reduced temperature $\varepsilon$, but instead by the
+system size itself. As $L$ increases, correlations require more time to
+propagate across the entire system, leading to a relaxation time that
+scales as a power law in $L$ with exponent $z$.
+
+
+A second relaxation time, the integrated relaxation time, is defined by the
+integral of the relaxation function
+\begin{equation}
+\tau_{\mathrm{int}} = \int_{0}^{\infty} \phi(t)\, dt.
+\end{equation}
+
+This quantity has particular importance for the determination of errors and
+is expected to diverge with the same dynamic exponent as the `exponential'
+relaxation time.
+
+
+\subsection{Metropolis Algorithm for the 2D Ising model}
+
+Source \cite{CompAndCrit}
+
+Metropolis method (\textbf{ref}) configurations are
+generated from a previous state using a transition probability which depends
+on the energy difference between the initial and final states. The states produced follows a time ordered path, and this time is not a proper time but a Monte-Carlo time. 
+For relaxational models, such as the stochastic Ising model, the time-dependent behavior is described by the master equation (1) : 
+\begin{equation}
+\frac{\partial P_n(t)}{\partial t}
+= - \sum_{n \neq m} \left[ P_n(t) W_{n \to m} - P_m(t) W_{m \to n} \right]
+\end{equation} 
+with the probability of the nth state occurring in a classical system is given by
+\[P_n = \frac{e^{-\beta E_n}}{Z}\] with Z the partition function which we don't know about. To bypass the epxression of Z, we generate a Markov chain of states, i.e. we generate each new state directly from the preceding state. If we produce the $n_{th}$ state from the $m_{th}$ state, and then calculate the
+relative probability which is the ratio of the individual probabilites, the denominator cancels. As a result, only the energy difference between the two states is needed : $\Delta E = E_n - E_m$
+
+Indeed know thanks to the master equation (1) that in equilibrium : 
+\[P_n W_{n\to m} = P_m W_{n\to m }\]
+
+Thus \[\frac{Wn\to m}{Wm\to n} = \frac{P_m}{P_n} = e^{-\beta \Delta E}\]
+
+Therefore, \[
+W_{n\to m} =
+\begin{cases}
+\tau_0^{-1} e^{-\beta \Delta E} = e^{-\beta \Delta E} & \text{si } \Delta E > 0,\\
+\tau_0^{-1} = 1 & \text{si } \Delta E \le 0.
+\end{cases}
+\]
+
+as we know that $W_{n\to m}$ is of the dimensional of 1/time and $\tau_0$ is the time required to attempt a spin-flip that we choose equal to 1. 
+
+The steps of the algorithm are as follows:
+\begin{enumerate}
+  \item Choose an initial state.
+  \item Choose a lattice site $i$.
+  \item Compute the energy change $\Delta E$ resulting from flipping the spin at site $i$.
+  \item Generate a random number $r$ such that $0 < r < 1$.
+  \item If $r < e^{-\beta \Delta E}$, flip the spin.
+  \item Move to the next site and return to step (3).
+\end{enumerate}
+
+
+\subsubsection{Single-Spin Metropolis algorithm (checkerboard) on 2D Ising Model}
+
+In this work we use a \emph{hot start} (random initial condition) for each run:
+the lattice spins are initialized independently to \(+1\) or \(-1\) with equal
+probability. The hot start avoids biasing the system toward a magnetized
+state and is particularly convenient when scanning temperatures around \(T_c\).
+
+We employ a single-spin \emph{Metropolis} algorithm with a checkerboard
+(updating parity) scheme. The checkerboard scheme divides the square lattice
+into two sublattices (even/odd parity) so that all spins updated in the same
+micro-step have only neighbours belonging to the opposite parity; this allows
+an explicit, conflict-free update sequence:
+\[
+\text{for parity}=0,1:\quad \text{update all sites }(i,j)\text{ with }(i+j)\bmod 2=\text{parity}.
+\]
+Periodic boundary conditions are used throughout. For a proposed flip of spin
+\(s_{i,j}\) the energy change is
+\[
+\Delta E = 2 s_{i,j} \Big( J\sum_{\langle k\rangle} s_k + h \Big),
+\]
+and the Metropolis acceptance probability is
+\[
+P_\text{accept} = \min\big(1, e^{-\beta\Delta E}\big).
+\]
+
+
+\subsection{Monte Carlo time, equilibration and measurements}
+
+The algorithm produces a time-ordered sequence of configurations; the index
+along this sequence is the \emph{Monte Carlo time} (in units of sweeps when we
+define one sweep = \(L\times L\) single-spin update attempts). Because this
+time is algorithmic rather than physical, we refer to relaxation times in
+units of Monte Carlo sweeps.
+
+Before recording measurements we perform an equilibration phase of several
+thousand sweeps (or more near \(T_c\)) to ensure the system has reached
+stationarity. After equilibration we record observables (energy, total
+magnetization) at regular intervals. The choice of recording interval should
+be made in view of the autocorrelation time (below) to reduce correlation
+between successive measurements.
+
+
+Plotting the energy and magnetization time series for various inverse temperatures $\beta$ allows us to verify that the system reaches equilibrium, identify enhanced fluctuations near the critical temperature $\beta_c$, and observe critical slowing down. These plots are also used to determine the appropriate \emph{burn-in} period, i.e., the number of initial sweeps to discard before measurements, and to choose suitable recording intervals between successive measurements, ensuring that the collected data are sufficiently decorrelated.
+
+% Première moitié : images beta 0.1 à 0.44
+
+
+
+
+
+At low values of $\beta$ (high temperatures), both energy and magnetization fluctuate around mean values with relatively small amplitudes, indicating that the system is in a disordered phase and has reached equilibrium quickly. As $\beta$ approaches the critical region near $\beta_c \approx 0.44$, fluctuations in magnetization become much larger, reflecting the increased susceptibility and the onset of critical behavior. The energy time series remains relatively stable, but subtle increases in fluctuations can also be observed. Beyond $\beta_c$, magnetization tends to spend more time near nonzero values, corresponding to the emergence of spontaneous magnetization in the ordered phase. These plots also illustrate critical slowing down, as configurations near $\beta_c$ require longer Monte Carlo times to decorrelate, highlighting the need for a sufficiently long burn-in and appropriately spaced measurements.
+
+
+% Deuxième moitié : images beta 0.4407 à 0.6
+
+
+
+\subsection{Autocorrelation and integrated autocorrelation time}
+
+To quantify critical slowing down we compute the autocorrelation function of
+an observable \(A\) (for instance the magnetization \(M\), the energy or the susceptibility):
+\[
+C_A(t) = \langle A_{s} A_{s+t}\rangle - \langle A\rangle^2,
+\]
+and the normalized autocorrelation (autocorrelation coefficient)
+\[
+\rho_A(t) = \frac{C_A(t)}{C_A(0)}.
+\]
+A convenient scalar measure of the memory of the Markov chain is the
+\emph{integrated autocorrelation time}
+\[
+\tau_{\mathrm{int},A} = \frac{1}{2} + \sum_{t=1}^{T_{\max}} \rho_A(t),
+\]
+where the sum is truncated at a cutoff \(T_{\max}\) chosen e.g. by the window
+method (or until \(\rho_A(t)\) has decayed to noise). The statistical error
+of a sample mean \(\overline{A}\) computed from \(N\) recorded measurements
+is increased by autocorrelation; the effective sample size is \(N_\text{eff}\approx N/(2\tau_{\mathrm{int},A})\).
+
+
+\subsection{Extracting the dynamic exponent \(z\)}
+
+At criticality finite-size scaling for relaxational dynamics predicts that
+the characteristic relaxation time of the system at \(T_c\) scales with the
+linear size \(L\) as
+\[
+\tau_c(L) \propto L^{z},
+\]
+because the correlation length is cut off by the system size \(\xi\sim L\)
+and \(\tau\propto\xi^{z}\). In practice we estimate \(\tau_c(L)\) by the
+integrated autocorrelation time of the magnetization (or by the exponential
+autocorrelation time obtained from a fit of \(\rho(t)\approx e^{-t/\tau_{\exp}}\)),
+and then fit \(\log \tau_c\) versus \(\log L\) to extract \(z\):
+\[
+\log \tau_c = z \log L + \text{const}.
+\]
+
+
+\subsection{Susceptibility and measurement formulas}
+
+For a system of \(N=L^2\) spins and inverse temperature \(\beta\) the
+magnetic susceptibility at zero field is estimated from recorded
+magnetizations \(M_k\) as
+\[
+\chi = \beta N \left(\langle m^2\rangle - \langle |m|\rangle^2\right),
+\quad m=\frac{M}{N}.
+\]
+When a small nonzero external field \(h\) is present one should instead use
+\(\langle m\rangle\) (not \(\langle |m|\rangle\)) in the above variance term.
+
+\subsection{Error estimation}
+To estimate statistical uncertainties we recommend the blocking (binning)
+method: group consecutive measurements into blocks of size \(B\) (with
+\(B\gg \tau_{\mathrm{int}}\)), compute the block means and use the sample
+variance of block means to estimate the variance of the mean. The block size
+should be increased until the estimated error stabilizes.
