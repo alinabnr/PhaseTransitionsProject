@@ -429,6 +429,18 @@ We thus plot with the FDT theorem the susceptibility as function of $\beta$.
     \label{fig:susceptibility_beta}
 \end{figure}
 
+There is a sharp peak in susceptibility around 
+\[
+\beta_c = 0.4407,
+\]
+which corresponds to the critical temperature \(T_c\) for the 2D Ising model.
+
+This peak reflects the divergence of \(\chi\) at the phase transition, which proves the second-order phase transitions. Before \(\beta_c\) (high temperatures, \(T > T_c\)), \(\chi\) the system is in the paramagnetic phase, spins are disordered and fluctuations are small, after $\beta$ the system is in the ferromagnetic phase, most spins are aligned, so fluctuations of the total magnetization decrease.
+\\
+\\
+The maximum susceptibility is very high, which is typical for finite-size systems simulated with Metropolis: the peak would diverge in the thermodynamic limit. Small fluctuations for low \(\beta\) (high \(T\)) are expected because the system behaves almost like independent spins.
+
+The asymmetry of the peak is also visible: the high-\(\beta\) side (low \(T\)) decays more slowly than the low-\(\beta\) side, consistent with finite-size effects and critical slowing down in Metropolis simulations.
 
 Then we can compare the value of the susceptibility with the FDT and with a small non zero external field. 
 
@@ -438,6 +450,8 @@ Then we can compare the value of the susceptibility with the FDT and with a smal
     \caption{Susceptibility as a function of $\beta$ with small external field. The red dashed line indicates the critical value $\beta_c$.}
     \label{fig:susceptibility_beta}
 \end{figure}
+
+In addition to the fluctuation–dissipation theorem (FDT) estimate already discussed, we also computed the susceptibility by introducing a small external field and evaluating the numerical derivative $\chi \simeq \frac{M(h)-M(0)}{h}$. As shown in the second plot, this method produces a much smoother behaviour of $\chi$ as $\beta$ approaches the critical value $\beta_c \approx 0.4407$. In contrast to the FDT approach, which becomes increasingly noisy near criticality due to the strong growth of magnetization fluctuations, the finite-field method remains numerically stable and exhibits a clearer divergence pattern. Both methods are consistent and capture the expected critical behaviour, but the external-field approach provides a more robust estimate of the susceptibility close to the phase transition.
 
 
 \subsubsection{Wolff}
