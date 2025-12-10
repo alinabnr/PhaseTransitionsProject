@@ -1,4 +1,4 @@
-\section{Dynamic Critical Exponents and Autocorrelation Times}
+\section{Theoretical Background}
 
 
 \subsection{The 2D Ising Model}
@@ -29,10 +29,10 @@ where $N = L^2$ is the total number of spins in the lattice.
 
 The zero-field susceptibility $\chi$ is defined thermodynamically as:
 \begin{equation}
-    \chi = \frac{\partial \langle m \rangle}{\partial h} \Big|_{h=0} = \beta (\langle m^2 \rangle - \langle m \rangle^2).
+    \chi = \frac{\partial \langle m \rangle}{\partial h} \Big|_{h=0}.
 \end{equation}
 
-By the fluctuation-dissipation theorem, this equals to
+By the fluctuation-dissipation theorem (FDT), this equals to
 \begin{equation}
     \chi = \beta N (\langle m^2 \rangle - \langle m \rangle^2).
 \end{equation}
@@ -46,7 +46,7 @@ In finite simulations at $h = 0$, the  $\mathbb{Z}_2$ symmetry implies $\langle 
 
 Monte Carlo updates define a Markov chain on the configuration space with a transition operator that has the Boltzmann distribution as its stationary measure.
 For relaxational models, such as the stochastic Ising model, the time-dependent behavior is described by a master equation
-\begin{equation}
+\begin{equation} \label{equ:MasterEqu}
 \frac{\partial P_n(t)}{\partial t}
 = - \sum_{n \neq m} \left[ P_n(t) W_{n \to m} - P_m(t) W_{m \to n} \right],
 \end{equation}
@@ -90,37 +90,5 @@ A second relaxation time, the integrated relaxation time, is defined by the inte
 \end{equation}
 This quantity is of particular importance for the determination of errors and is expected to diverge with the same dynamic exponent as the `exponential' relaxation time, as both are governed by the same long-time behavior of $\phi(t)$.
 
-
-
-
-- Explain that the Metropolis and Wolff algorithms represent distinct stochastic dynamics (local vs. cluster).
-
-- Describe briefly the nature of updates each performs.
-
-2.3 Dynamic Critical Phenomena
-
-
-Here is where you derive the concept of dynamic critical exponents.
-
-
-- Near \(T_c\), the correlation length diverges as \(\xi \sim |T - T_c|^{-\nu}\).
-
-- Introduce time correlation functions, such as
-
-\(C_X(t) = \langle X(0) X(t) \rangle - \langle X \rangle^2\).
-
-- Define the autocorrelation time \(\tau_X\) via the exponential decay of \(C_X(t)\):
-
-\(C_X(t) \sim e^{-t/\tau_X}\).
-
-- State the scaling hypothesis:
-
-\(\tau_X \sim \xi^z\), where \(z\) is the dynamic critical exponent.
-
-- Combining both gives the divergence near criticality:
-
-\(\tau_X \sim |T - T_c|^{-z\nu}\).
-
-- Explain qualitatively that \(z\) depends on the update dynamics (hence on the algorithm).
-
-This section should include equation derivations, reasoning, and physical interpretation.
+\subsubsection{Error estimation}
+To estimate statistical uncertainties we recommend the blocking (binning) method: group consecutive measurements into blocks of size \(B\) (with \(B\gg \tau_{\mathrm{int}}\)), compute the block means and use the sample variance of block means to estimate the variance of the mean. The block size should be increased until the estimated error stabilizes.
