@@ -11,4 +11,8 @@ D.~P. Landau and K.~Binder, {\em A Guide to Monte Carlo Simulations in Statistic
 \bibitem{Metropolis}
 N.~Metropolis, A.~W. Rosenbluth, M.~N. Rosenbluth, A.~H. Teller, and E.~Teller, ``{Equation of State Calculations by Fast Computing Machines Available to Purchase},'' {\em The Journal of Chemical Physics}, vol.~21, 1953.
 
+\bibitem{CompAndCrit}
+K.~Christensen and N.~R. Moloney, {\em Complexity and Criticality}.
+\newblock Imperial College Press, 2005.
+
 \end{thebibliography}

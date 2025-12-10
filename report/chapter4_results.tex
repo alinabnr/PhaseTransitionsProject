@@ -54,19 +54,29 @@ Susceptibility plots in figures \ref{fig:MetropolisSuscVsBeta} and \ref{fig:Wolf
 It is to be noted that we plotted the susceptibility computed from the absolute magnetization $|M|$ rather than $M$ itself, which prevents sector cancellations, as due to $\mathbb{Z}_2$ symmetry finite systems flip between magnetized sectors. This yields the standard finite-size peak near $\beta_c$.
 That choice does not affect our determination of $T_c$ or the scaling analysis.
 
+
 \subsection{Autocorrelation Behavior}
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width = 0.9 \textwidth]{../plots/tau_int_vs_beta_comparison_L128.png}
+    \includegraphics[width = 1 \textwidth]{../plots/tau_int_vs_beta_comparison_L128.png}
     \caption[Integrated autocorrelation functions for Metropolis and Wolff updates]{Integrated autocorrelation functions $\rho_M(t)$ of the magnetization for $L=128$ at criticality $\beta_c \approx 0.4407$, comparing Metropolis (blue) and Wolff (orange) updates.}
     \label{fig:AutocorrComparison}
 \end{figure}
 
-We illustrate the dynamical contrast between local and cluster updates in figure \ref{fig:AutocorrComparison} by plotting the integrated autocorrelation time of the energy versus $\beta$ at fixed $L=128$. Metropolis shows a pronounced peak centered near $\beta_c \approx 0.4407$, evidencing strong critical slowing down and long relaxation at the transition. By contrast, Wolff yields uniformly small $\tau_{int}$ with only a mild bump near $\beta_c$, demonstrating that cluster updates suppress critical correlations and greatly reduce relaxation times. This qualitative difference motivates our finite-size scaling of $\tau$ at $\beta_c$ to extract the dynamic exponent $z$.
+We illustrate the dynamical contrast between local and cluster updates in figure \ref{fig:AutocorrComparison} by plotting the integrated autocorrelation time of the energy versus $\beta$ at fixed $L=128$. 
+
+For energy, Metropolis shows a pronounced peak centered near $\beta_c \approx 0.4407$ at $\tau_{int} = 206.97$, evidencing strong critical slowing down and long relaxation at the transition. By contrast, Wolff yields a small $\tau_{int} = 2.94$ at $\beta_c$, demonstrating that cluster updates suppress critical correlations and greatly reduce relaxation times. Thus, the Metropolis relaxation is slower by a factor of $\approx 70$.
+
+For magnetization it is qualitatively the same. Metropolis shows a clear peak centered near $\beta_c \approx 0.4407$ at $\tau_{int} = 10948.72$. Conversely, Wolff yields $\tau_{int} = 1.59$ at $\beta_c$. Hence, the Metropolis relaxation is slower by a factor of $\approx 6.9 \times 10^3$.
+
+This qualitative difference motivates our finite-size scaling of $\tau$ at $\beta_c$ to extract the dynamic exponent $z$.
 
 
 \subsection{Divergence near Criticality}
+
+
+
 - Plot autocorrelation time \(\tau(T)\) vs. \(|T - T_c|\).
 
 - Fit \(\tau \sim |T - T_c|^{-z\nu}\) or equivalently \(\tau \sim L^{z}\) at \(T_c\) for finite-size scaling.
