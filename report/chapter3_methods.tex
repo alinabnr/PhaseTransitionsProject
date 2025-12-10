@@ -1,0 +1,50 @@
+\section{Methodology}
+
+\subsection{Practical Estimators and Extraction of z}
+
+To quantify critical slowing down we compute the autocorrelation function of an observable \(A\) (for instance the magnetization \(M\), the energy or the susceptibility):
+\[
+C_A(t) = \langle A_{s} A_{s+t}\rangle - \langle A\rangle^2,
+\]
+and the normalized autocorrelation (autocorrelation coefficient)
+\[
+\rho_A(t) = \frac{C_A(t)}{C_A(0)}.
+\]
+A convenient scalar measure of the memory of the Markov chain is the
+\emph{integrated autocorrelation time}
+\[
+\tau_{\mathrm{int},A} = \frac{1}{2} + \sum_{t=1}^{T_{\max}} \rho_A(t),
+\]
+where the sum is truncated at a cutoff \(T_{\max}\) chosen e.g. by the window
+method (or until \(\rho_A(t)\) has decayed to noise). The statistical error
+of a sample mean \(\overline{A}\) computed from \(N\) recorded measurements
+is increased by autocorrelation; the effective sample size is \(N_\text{eff}\approx N/(2\tau_{\mathrm{int},A})\).
+
+In practice we estimate \(\tau_c(L)\) by the
+integrated autocorrelation time of the magnetization (or by the exponential
+autocorrelation time obtained from a fit of \(\rho(t)\approx e^{-t/\tau_{\exp}}\)),
+and then fit \(\log \tau_c\) versus \(\log L\) to extract \(z\):
+\[
+\log \tau_c = z \log L + \text{const}.
+\]
+
+
+\subsection{Numerical Implementation}
+
+- Briefly describe the simulation parameters: lattice size, boundary conditions, temperature range around \(T_c\), number of Monte Carlo steps.
+
+- Explain data collection: measuring magnetization \(M\), energy \(E\), and recording time series.
+
+\subsection{Computation of Autocorrelation}
+
+- Explicit definition:
+
+\(C_X(t) = \frac{\langle X_i X_{i+t} \rangle - \langle X \rangle^2}{\langle X^2 \rangle - \langle X \rangle^2}\).
+
+- Define integrated autocorrelation time or exponential autocorrelation time, and how you extract it (e.g., exponential fit, binning analysis).
+
+\subsection{Simulation Details}
+- Note equilibration time, number of independent runs, random number generator, etc.
+
+- Briefly explain how \(T_c\) is estimated or chosen.
+
