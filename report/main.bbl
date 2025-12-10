@@ -1,0 +1,14 @@
+\begin{thebibliography}{1}
+
+\bibitem{2DIsingCritTemp}
+``Square lattice ising model.'' Wikipedia, 2025.
+\newblock Accessed on: December 10, 2025.
+
+\bibitem{LandauMonteCarlo}
+D.~P. Landau and K.~Binder, {\em A Guide to Monte Carlo Simulations in Statistical Physics}.
+\newblock Cambridge University Press, 2005.
+
+\bibitem{Metropolis}
+N.~Metropolis, A.~W. Rosenbluth, M.~N. Rosenbluth, A.~H. Teller, and E.~Teller, ``{Equation of State Calculations by Fast Computing Machines Available to Purchase},'' {\em The Journal of Chemical Physics}, vol.~21, 1953.
+
+\end{thebibliography}

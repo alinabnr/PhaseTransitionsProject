@@ -1,0 +1,99 @@
+\section{Theoretical Background}
+
+
+\subsection{The 2D Ising Model}
+
+The two-dimensional square-lattice Ising model is a paradigmatic system for studying phase transitions and critical phenomena. Spins $s_i = \pm 1$ occupy the sites of the $L \times L$ lattice with periodic boundary conditions (PBD) and interact with their nearest neighbors. The Hamiltonian for the system is given by:
+
+\begin{equation}
+H = -J \sum_{\langle i,j \rangle} s_i s_j - h \sum_i s_i,
+\end{equation}
+
+where $J$ is the interaction strength, $h$ is an external magnetic field, and the sum $\langle i,j \rangle$ runs over nearest neighbor pairs.
+
+In zero external field ($h = 0$), the model exhibits a second-order phase transition at a critical temperature $T_c$, separating a low-temperature ferromagnetic phase (with non-zero spontaneous magnetization) from a high-temperature paramagnetic phase (with zero magnetization). For the 2D Ising model, the critical temperature is known exactly from Onsager's solution:
+\begin{equation}
+    \frac{k_B T_c}{J} = \frac{2}{\ln(1 + \sqrt{2})} \approx 2.2691853,
+\end{equation}
+or equivalently,
+\begin{equation}
+    J \beta_c = J \frac{1}{k_B T_c} \approx 0.4406868,
+\end{equation}
+where $k_B$ is the Boltzmann constant. \cite{2DIsingCritTemp}
+
+The order parameter is the magnetization per spin, defined as:
+\begin{equation}   
+    m = \frac{1}{N} \sum_{i=1}^{N} s_i,
+\end{equation}
+where $N = L^2$ is the total number of spins in the lattice.
+
+The zero-field susceptibility $\chi$ is defined thermodynamically as:
+\begin{equation}
+    \chi = \frac{\partial \langle m \rangle}{\partial h} \Big|_{h=0}.
+\end{equation}
+
+By the fluctuation-dissipation theorem (FDT), this equals to
+\begin{equation}
+    \chi = \beta N (\langle m^2 \rangle - \langle m \rangle^2).
+\end{equation}
+
+In finite simulations at $h = 0$, the  $\mathbb{Z}_2$ symmetry implies $\langle m \rangle = 0$ unless symmetry is explicitly broken. For thermodynamic estimates we use $m$ in the fluctuation formula for $\chi$, but for visualization we plot $\langle |m| \rangle$ in figures (in particular for the Wolff algorithm), since $|m|$ avoids sign cancellations and makes the ordered phase evident.
+
+In practice, this derivative is often approximated by a finite-difference scheme using a small nonzero field $h_0$:
+\begin{equation}
+\chi \approx \frac{\langle M \rangle_{+h_0} - \langle M \rangle_{-h_0}}{2 h_0}.
+\end{equation}
+
+
+\subsection{Monte Carlo Dynamics}
+
+\subsubsection{Markov Chains and Master Equations}
+
+Monte Carlo updates define a Markov chain on the configuration space with a transition operator that has the Boltzmann distribution as its stationary measure.
+For relaxational models, such as the stochastic Ising model, the time-dependent behavior is described by a master equation (\cite{LandauMonteCarlo})
+\begin{equation} \label{equ:MasterEqu}
+\frac{\partial P_n(t)}{\partial t}
+= - \sum_{n \neq m} \left[ P_n(t) W_{n \to m} - P_m(t) W_{m \to n} \right],
+\end{equation}
+where $P_n(t)$ is the probability of the system being in state $n$ at time $t$, and $W_{n \to m}$ is the transition rate for $n \to m$.
+
+The solution to the master equation is a sequence of states, but the time variable is a stochastic quantity which does not represent true time.
+A relaxation function $\phi(t)$ can be defined which describes time correlations \emph{within equilibrium}
+\begin{equation}
+\phi_{MM}(t)
+= \frac{\langle M(0)M(t)\rangle - \langle M \rangle^2}
+{\langle M^2 \rangle - \langle M \rangle^2}.
+\end{equation}
+
+When normalized in this way, the relaxation function is $1$ at $t = 0$ and decays to zero as $t \to \infty$. It is important to remember that for a system in equilibrium any time in the sequence of states may be chosen as the `$t=0$' state. The asymptotic, long time behavior of the relaxation function is exponential, i.e.
+\begin{equation}
+\phi(t) \to e^{-t/\tau},
+\end{equation}
+where the correlation time $\tau$ diverges as $T_c$ is approached.
+
+\subsubsection{Dynamic Critical Phenomena}
+This dynamic (relaxational) critical behavior can be expressed in terms of a power law as well,
+\begin{equation}
+\tau \propto \xi^{z} \propto \varepsilon^{-\nu z},
+\end{equation}
+where $\xi$ is the (divergent) correlation length, $\varepsilon = |1 - T/T_c|$, and $z$ is the dynamic critical exponent.
+
+In a finite system of linear size $L$, the divergence of the correlation
+length at criticality is limited by the system size.
+Exactly at $T_c$, the correlation length therefore saturates at $\xi \sim L$. Inserting this finite-size cutoff into the critical slowing-down relation $\tau \propto \xi^{z}$ gives
+\begin{equation}
+\tau_c \sim L^{z}.
+\end{equation}
+Thus, at the critical temperature, the relaxation time is no longer
+controlled by the reduced temperature $\varepsilon$, but instead by the
+system size itself.
+As $L$ increases, correlations require more time to propagate across the entire system, leading to a relaxation time that scales as a power law in $L$ with exponent $z$.
+
+A second relaxation time, the integrated relaxation time, is defined by the integral of the relaxation function
+\begin{equation}
+\tau_{\mathrm{int}} = \int_{0}^{\infty} \phi(t)\, dt.
+\end{equation}
+This quantity is of particular importance for the determination of errors and is expected to diverge with the same dynamic exponent as the `exponential' relaxation time, as both are governed by the same long-time behavior of $\phi(t)$.
+
+\subsubsection{Error estimation}
+To estimate statistical uncertainties we recommend the blocking (binning) method: group consecutive measurements into blocks of size \(B\) (with \(B\gg \tau_{\mathrm{int}}\)), compute the block means and use the sample variance of block means to estimate the variance of the mean. The block size should be increased until the estimated error stabilizes.

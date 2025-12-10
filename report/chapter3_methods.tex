@@ -1,0 +1,136 @@
+\section{Methodology}
+
+
+\subsection{Model and Setup}
+We simulate the ferromagnetic Ising model on a two-dimensional square lattice of linear size L with PBC. The number of spins is $N = L^2$, with spin variables $s_i \in {-1, +1}$. Throughout we set $k_B = 1$, hence $\beta = \frac{1}{T}$, and $J = 1$.
+
+Lattice and sizes:
+\begin{itemize}
+    \item $L \in [2, 4, 8, 16, 32, 64, 128]$
+    \item PBC in both directions.
+\end{itemize}
+
+Temperature range:
+\begin{itemize}
+    \item We scan a window around the exact critical point $\beta_c = 0.4407$, namely
+    
+    \begin{center}
+        $\beta \in [0.1, 0.2, 0.3, 0.4, 0.41, 0.42, 0.43, 0.44, 0.4407, 0.45, 0.46, 0.47, 0.48, 0.49, 0.5, 0.6]$
+    \end{center}
+    \item For finite-size scaling at $T_c$, we fix $\beta = \beta_c$ and vary L.
+\end{itemize}
+
+Initialization:
+\begin{itemize}
+    \item Hot (spins initialized independently to ±1 with equal probability) and cold (all spins $+1$) starts with equal probability.
+\end{itemize}
+
+Time units:
+\begin{itemize}
+    \item Metropolis: one Monte Carlo sweep (MCS) = N single-spin flip attempts.
+    \item Wolff: one Wolff step = one cluster flip; to compare time scales, we define “Wolff sweeps” by accumulating flipped spins until the total equals N on average.
+\end{itemize}
+
+Observables:
+\begin{itemize}
+    \item Energy E, magnetization $M$.
+    \item For dynamic analysis: time series of $M$ and $E$ to compute $\rho_A(t)$, $\tau_{\text{int}}$, and $\tau_{\text{exp}}$.
+\end{itemize}
+
+
+\subsection{Update Algorithms}
+\subsubsection{Metropolis (local)}
+Metropolis method \cite{Metropolis} configurations are
+generated from a previous state using a transition probability which depends
+on the energy difference between the initial and final states. The states produced follows a time ordered path, and this time is not a proper time but a Monte-Carlo time. 
+For relaxational models, such as the stochastic Ising model, the time-dependent behavior is described by the master equation \ref{equ:MasterEqu}, with the probability of the nth state occurring in a classical system is given by
+$P_n = \frac{e^{-\beta E_n}}{Z}$ with Z the partition function which we don't know about. To bypass the expression of Z, we generate a Markov chain of states, i.e. we generate each new state directly from the preceding state. If we produce the $n_{th}$ state from the $m_{th}$ state, and then calculate the
+relative probability which is the ratio of the individual probabilities, the denominator cancels. As a result, only the energy difference between the two states is needed : $\Delta E = E_n - E_m$
+
+Indeed know thanks to the master equation that in equilibrium 
+$P_n W_{n\to m} = P_m W_{m\to n }$.
+
+Thus 
+\begin{equation}
+    \frac{Wn\to m}{Wm\to n} = \frac{P_m}{P_n} = e^{-\beta \Delta E},
+\end{equation}
+
+and therefore,
+
+\begin{equation}
+W_{n\to m} =
+\begin{cases}
+\tau_0^{-1} e^{-\beta \Delta E} = e^{-\beta \Delta E} & \text{for } \Delta E > 0,\\
+\tau_0^{-1} = 1 & \text{for } \Delta E \le 0.
+\end{cases}
+\end{equation}
+
+as we know that $W_{n\to m}$ is of the dimensional of 1/time and $\tau_0$ is the time required to attempt a spin-flip that we choose equal to 1. 
+
+The steps of the algorithm are as follows:
+\begin{enumerate}
+  \item Choose an initial state.
+  \item Choose a lattice site $i$.
+  \item Compute the energy change $\Delta E$ resulting from flipping the spin at site $i$.
+  \item Generate a random number $r$ such that $0 < r < 1$.
+  \item If $r < e^{-\beta \Delta E}$, flip the spin.
+  \item Move to the next site and return to step (3).
+\end{enumerate}
+
+\subsubsection{Wolff (cluster)}
+
+Wolff proposed an alternative algorithm based on the Fortuin-Kasteleyn theorem in which single clusters are grown and flipped sequentially. The algorithm begins with the random choice of a single site. Bonds are then drawn to all nearest neighbors which are in the same state with probability 
+\begin{equation} \label{equ:WolffProb}
+    p = 1-e^{-K\delta_{\sigma_i \sigma_j}}.
+\end{equation}
+One then moves to all sites in turn which have been connected to the initial
+site and places bonds between them and any of their nearest neighbors which
+are in the same state with probability given by equation \ref{equ:WolffProb}. The process
+continues until no new bonds are formed and the entire cluster of connected
+sites is then flipped. Another initial site is chosen and the process is then
+repeated.
+A single Wolff cluster update consists of the following steps:
+    \begin{enumerate}
+        \item Randomly select a seed spin from the lattice.
+        \item Grow a cluster by adding neighboring spins with the same orientation with probability $p_{\text{add}} = 1 - \exp(-2 \beta J)$, where $J$ is the nearest-neighbor coupling and $\beta = 1/T$ is the inverse temperature.
+        \item Repeat the cluster growth iteratively for all new cluster members until no further spins are added.
+        \item Flip all spins in the cluster simultaneously.
+    \end{enumerate}
+Depth-first search is used to traverse and grow the cluster efficiently. DFS avoids revisiting the same spins multiple times, making the algorithm fast even for very large clusters.
+
+The Monte Carlo time was rescaled for the Wolff algorithm using the mean number of flipped clusters $\langle C \rangle$ per step:
+\begin{equation}
+    \Delta t = \frac{\langle C\rangle}{L^2}, \quad
+    t_\text{MC} = \sum \Delta t
+\end{equation}
+This makes the Wolff steps comparable to a full Metropolis sweep.
+Time series of energy $E$, magnetization $M$, absolute magnetization $|M|$, and squared magnetization $M^2$ were analyzed for each $\beta$ to study fluctuations and equilibrium behavior.
+
+\subsection{Practical Estimators and Extraction of z}
+
+To quantify critical slowing down we compute the autocorrelation function of an observable \(A\) (for instance the magnetization \(M\), the energy or the susceptibility):
+\begin{equation}
+C_A(t) = \langle A_{s} A_{s+t}\rangle - \langle A\rangle^2,
+\end{equation}
+and the normalized autocorrelation (autocorrelation coefficient)
+\begin{equation}
+    \rho_A(t) = \frac{C_A(t)}{C_A(0)}.
+\end{equation}
+
+A convenient scalar measure of the memory of the Markov chain is the
+\emph{integrated autocorrelation time}
+\begin{equation}
+\tau_{\mathrm{int},A} = \frac{1}{2} + \sum_{t=1}^{T_{\max}} \rho_A(t),
+\end{equation}
+where the sum is truncated at a cutoff \(T_{\max}\) chosen e.g. by the window
+method (or until \(\rho_A(t)\) has decayed to noise). The statistical error
+of a sample mean \(\overline{A}\) computed from \(N\) recorded measurements
+is increased by autocorrelation; the effective sample size is \(N_\text{eff}\approx N/(2\tau_{\mathrm{int},A})\).
+
+In practice we estimate \(\tau_c(L)\) by the
+integrated autocorrelation time of the magnetization (or by the exponential
+autocorrelation time obtained from a fit of \(\rho(t)\approx e^{-t/\tau_{\exp}}\)),
+and then fit \(\log \tau_c\) versus \(\log L\) to extract \(z\):
+\begin{equation}
+\log \tau_c = z \log L + \text{const}.
+\end{equation}
