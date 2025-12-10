@@ -31,8 +31,8 @@ Initialization:
 
 Time units:
 \begin{itemize}
-    \item Metropolis: one Monte Carlo sweep (MCS) = N single-spin flip attempts.
-    \item Wolff: one Wolff step = one cluster flip; to compare time scales, we define `Wolff sweeps' such that on average $N$ spins are flipped in one sweep, as detailed in section \ref{section:WolffAlgo}.
+    \item Metropolis: one Monte Carlo sweep (MCS) = N single-spin flip attempts. We used 1 million MCS in the simulation for all system sizes.
+    \item Wolff: one Wolff step = one cluster flip; to compare time scales, we define `Wolff sweeps' such that on average $N$ spins are flipped in one sweep, as detailed in section \ref{section:WolffAlgo}. We used 100,000 Wolff sweeps for all system sizes.
 \end{itemize}
 
 Observables:
@@ -117,7 +117,7 @@ C_A(t) = \langle A_{s} A_{s+t}\rangle - \langle A\rangle^2,
 and the normalized autocorrelation (autocorrelation coefficient)
 \begin{equation}
     \rho_A(t) = \frac{C_A(t)}{C_A(0)}.
-\end{equation}F
+\end{equation}
 
 A convenient scalar measure of the memory of the Markov chain is the
 \emph{integrated autocorrelation time}
