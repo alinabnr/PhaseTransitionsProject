@@ -96,15 +96,12 @@ This allows us to extract the dynamic critical exponent $z$ for both the magneti
     \label{fig:FSSWolff}
 \end{figure}
 
+The extracted dynamic exponents show a stark algorithmic contrast. For Metropolis we find $z_M \approx 2.03 \pm 0.03$ (magnetization) and $z_E \approx 1.39 \pm 0.06$ (energy). The magnetization result is close to the expected $z \approx 2.1$ (\cite{Adzhemyan2022}) for local dynamics, while the energy-based estimate is noticeably lower, reflecting that $\tau_E$ is harder to measure reliably, because energy time series have smaller signal-to-noise, broader multi-time-scale structure, and stronger finite-size/systematic effects near $\beta_c$, whereas magnetization directly probes the slow order-parameter mode that controls critical relaxation.
+For Wolff, $z_M \approx 0.217 \pm 0.035$ and $z_E \approx 0.367 \pm 0.021$ both indicate a dramatic suppression of critical slowing down. The magnetization-based value lies within the expected $0 - 0.3$ range, while the energy-based value is somewhat higher, again consistent with noisier $\tau_E$ estimates and the fact that cluster flips most efficiently decorrelate the order parameter, leaving residual shorter scales in energy. Overall, $M$ provides the more reliable estimator of z for both algorithms, with E tending to bias low for Metropolis and high for Wolff due to noise and mixed time scales.
 
 
 
-Expected behavior:
 
-
-- Metropolis: \(z \approx 2.1\)
-
-- Wolff: \(z \approx 0 \text{–} 0.3\)
 
 \subsection{Comparison of Algorithm Efficiency}
 

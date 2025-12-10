@@ -124,13 +124,12 @@ A convenient scalar measure of the memory of the Markov chain is the
 \begin{equation}
 \tau_{\mathrm{int},A} = \frac{1}{2} + \sum_{t=1}^{T_{\max}} \rho_A(t),
 \end{equation}
-where the sum is truncated at a cutoff \(T_{\max}\) chosen e.g. by the window
-method (or until \(\rho_A(t)\) has decayed to noise).
+where the sum is truncated at a cutoff \(T_{\max}\).
+A common choice of \(T_{\max}\) is a multiple of \(\tau_{\mathrm{int},A}\) itself, i.e. \(T_{\max} = c \tau_{\mathrm{int},A}\), where \(c\) is chosen to be 5.
+Since the integrated autocorrelation is defined self-consistently, this is done in an iterative process.
 
-In practice we estimate \(\tau_c(L)\) by the
-integrated autocorrelation time of the magnetization (or by the exponential
-autocorrelation time obtained from a fit of \(\rho(t)\approx e^{-t/\tau_{\exp}}\),
-and then fit \(\log \tau_c\) versus \(\log L\) to extract \(z\):
+We estimate the relaxation time of an observable \(A\) \(\tau_A(L)\) by the
+integrated autocorrelation time and then fit \(\log \tau_c\) versus \(\log L\) to extract \(z\):
 \begin{equation}
 \log \tau_c = z \log L + \text{const}.
 \end{equation}
