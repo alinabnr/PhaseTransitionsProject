@@ -21,4 +21,10 @@ U.~Wolff, ``Collective monte carlo updating for spin systems,'' {\em Phys. Rev. 
 \bibitem{Adzhemyan2022}
 L.~T. Adzhemyan, D.~A. Evdokimov, M.~Hnatič, E.~V. Ivanova, M.~V. Kompaniets, A.~Kudlis, and D.~V. Zakharov, ``The dynamic critical exponent z for 2d and 3d ising models from five-loop \(\epsilon\) expansion,'' {\em Physics Letters A}, vol.~425, p.~127870, Feb. 2022.
 
+\bibitem{Ossola_2004}
+G.~Ossola and A.~D. Sokal, ``Dynamic critical behavior of the swendsen–wang algorithm for the three-dimensional ising model,'' {\em Nuclear Physics B}, vol.~691, pp.~259--291, July 2004.
+
+\bibitem{dilaver2004newmeasurementdynamiccritical}
+M.~Dílaver, S.~Gündüç, M.~Aydın, and Y.~Gündüç, ``A new measurement of dynamic critical exponent of wolff algorithm by dynamic finite size scaling,'' 2004.
+
 \end{thebibliography}
