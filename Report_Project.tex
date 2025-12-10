@@ -5,6 +5,8 @@
 \usepackage{graphicx}   % Pour inclure des images
 \usepackage{subcaption} % Pour créer des sous-figures
 \usepackage{capt-of}
+\usepackage{float}
+
 
 
 \title{Critical Slowing Down}
@@ -30,7 +32,10 @@
 This project explores critical slowing down in the two-dimensional Ising model near the critical temperature $T_c$. Using Markov chain Monte Carlo methods, we implement both the Metropolis and Wolff algorithms to generate spin configurations and measure autocorrelation times of magnetization and energy. Magnetic susceptibility is determined with an external field B, and, in the absence of the field, via the fluctuation–dissipation theorem (FDT). The scaling of relaxation times allows estimation of the dynamic critical exponent 
 z for each algorithm. Comparisons between local and cluster updates highlight their relative efficiency at criticality, showing how algorithmic choices affect the sampling of Markov chains in systems exhibiting critical slowing down and field-induced responses.
 
-\newpage
+
+\tableofcontents
+
+
 
 \section{Introduction: Dynamic Critical Exponents and Autocorrelation Times}
 
@@ -104,18 +109,21 @@ relaxation time.
 \subsection{Autocorrelation and integrated autocorrelation time for magnetization and energy}
 To quantify critical slowing down we compute the autocorrelation function of
 an observable \(A\) (for instance the magnetization \(M\), the energy or the susceptibility):
-\[
+\begin{equation}
 C_A(t) = \langle A_{s} A_{s+t}\rangle - \langle A\rangle^2,
-\]
+\end{equation}
+
 and the normalized autocorrelation (autocorrelation coefficient)
-\[
+\begin{equation}
 \rho_A(t) = \frac{C_A(t)}{C_A(0)}.
-\]
+\end{equation}
+
 A convenient scalar measure of the memory of the Markov chain is the
 \emph{integrated autocorrelation time}
-\[
+\begin{equation}
 \tau_{\mathrm{int},A} = \frac{1}{2} + \sum_{t=1}^{T_{\max}} \rho_A(t),
-\]
+\end{equation}
+
 where the sum is truncated at a cutoff \(T_{\max}\) chosen e.g. by the window
 method (or until \(\rho_A(t)\) has decayed to noise).
 
@@ -123,36 +131,36 @@ method (or until \(\rho_A(t)\) has decayed to noise).
 At criticality finite-size scaling for relaxational dynamics predicts that
 the characteristic relaxation time of the system at \(T_c\) scales with the
 linear size \(L\) as
-\[
+\begin{equation}
 \tau_c(L) \propto L^{z},
-\]
+\end{equation}
 because the correlation length is cut off by the system size \(\xi\sim L\)
 and \(\tau\propto\xi^{z}\). We estimate \(\tau_c(L)\) by the
 integrated autocorrelation time of the magnetization (\textbf{explain why}),
 and then fit \(\log \tau_c\) versus \(\log L\) to extract \(z\):
-\[
+\begin{equation}
 \log \tau_c = z \log L + \text{const}.
-\]
+\end{equation}
 
 \subsection{Susceptibility}
 For a system of \(N=L^2\) spins at zero field is estimated from recorded
 magnetizations \(M_k\) with the FDT, Fluctuation-Dissipation Theorem: 
-\[
+\begin{equation}
 \chi = \frac{1}{k_B T} \left( \langle M^2 \rangle - \langle M \rangle^2 \right)
-\]
+\end{equation}
 
 The susceptibility is also defined thermodynamically as the derivative of the average magnetization with respect to an external magnetic field $h$: \cite{2}
 
 
-\[
+\begin{equation}
 \chi = \left. \frac{\partial \langle M \rangle}{\partial h} \right|_{h=0}
-\]
+\end{equation}
 
 In practice, this derivative is often approximated by a finite-difference scheme using a small nonzero field $h_0$:
 
-\[
-\chi \approx \frac{\langle M \rangle_{+h_0} - \langle M \rangle_{-h_0}}{2 h_0}\]
- 
+\begin{equation}
+\chi \approx \frac{\langle M \rangle_{+h_0} - \langle M \rangle_{-h_0}}{2 h_0}
+\end{equation}
 with matched burn-in across the $\pm h_0$ runs for each $\beta$
 
 \section{Algorithm }
@@ -168,21 +176,29 @@ For relaxational models, such as the stochastic Ising model, the time-dependent 
 = - \sum_{n \neq m} \left[ P_n(t) W_{n \to m} - P_m(t) W_{m \to n} \right]
 \end{equation} 
 with the probability of the nth state occurring in a classical system is given by
-\[P_n = \frac{e^{-\beta E_n}}{Z}\] with Z the partition function which we don't know about. To bypass the epxression of Z, we generate a Markov chain of states, i.e. we generate each new state directly from the preceding state. If we produce the $n_{th}$ state from the $m_{th}$ state, and then calculate the
+\begin{equation}
+P_n = \frac{e^{-\beta E_n}}{Z}
+\end{equation} 
+with Z the partition function which we don't know about. To bypass the epxression of Z, we generate a Markov chain of states, i.e. we generate each new state directly from the preceding state. If we produce the $n_{th}$ state from the $m_{th}$ state, and then calculate the
 relative probability which is the ratio of the individual probabilites, the denominator cancels. As a result, only the energy difference between the two states is needed : $\Delta E = E_n - E_m$
 
 Indeed know thanks to the master equation (1) that in equilibrium : 
-\[P_n W_{n\to m} = P_m W_{n\to m }\]
+\begin{equation}
+P_n W_{n\to m} = P_m W_{n\to m }
+\end{equation} 
 
-Thus \[\frac{Wn\to m}{Wm\to n} = \frac{P_m}{P_n} = e^{-\beta \Delta E}\]
+Thus 
+\begin{equation}
+\frac{Wn\to m}{Wm\to n} = \frac{P_m}{P_n} = e^{-\beta \Delta E}
+\end{equation}
 
-Therefore, \[
+Therefore, \begin{equation}
 W_{n\to m} =
 \begin{cases}
 \tau_0^{-1} e^{-\beta \Delta E} = e^{-\beta \Delta E} & \text{si } \Delta E > 0,\\
 \tau_0^{-1} = 1 & \text{si } \Delta E \le 0.
 \end{cases}
-\]
+\end{equation}
 
 as we know that $W_{n\to m}$ is of the dimensional of 1/time and $\tau_0$ is the time required to attempt a spin-flip that we choose equal to 1. 
 
@@ -208,18 +224,18 @@ We employ a single-spin \emph{Metropolis} algorithm with a checkerboard
 into two sublattices (even/odd parity) so that all spins updated in the same
 micro-step have only neighbours belonging to the opposite parity; this allows
 an explicit, conflict-free update sequence:
-\[
+\begin{equation}
 \text{for parity}=0,1:\quad \text{update all sites }(i,j)\text{ with }(i+j)\bmod 2=\text{parity}.
-\]
+\end{equation}
 Periodic boundary conditions are used throughout. For a proposed flip of spin
 \(s_{i,j}\) the energy change is
-\[
+\begin{equation}
 \Delta E = 2 s_{i,j} \Big( J\sum_{\langle k\rangle} s_k + h \Big),
-\]
+\end{equation}
 and the Metropolis acceptance probability is
-\[
+\begin{equation}
 P_\text{accept} = \min\big(1, e^{-\beta\Delta E}\big).
-\]
+\end{equation}
 
 \subsubsection{Monte Carlo time}
 The algorithm produces a time-ordered sequence of configurations; the index
@@ -237,9 +253,9 @@ on the Fortuin–Kasteleyn theorem in which single clusters are grown and
 flipped sequentially. The algorithm begins with the random choice of
 a single site. Bonds are then drawn to all nearest neighbors which are in the
 same state with probability 
-\[
+\begin{equation}
 p = 1-e^{-K\delta_{\sigma_i \sigma_j}}
-\]
+\end{equation}
 One then moves to all sites in turn which have been connected to the initial
 site and places bonds between them and any of their nearest neighbors which
 are in the same state with probability given by equation (6). The process
@@ -406,7 +422,7 @@ These plots also illustrate critical slowing down, as configurations near $\beta
 \subsubsection{Metropolis}
 We thus plot with the FDT theorem the susceptibility as function of $\beta$. 
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.6\linewidth]{susceptibility_fdt_metropolis.png}
     \caption{Susceptibility as a function of $\beta$. The red dashed line indicates the critical value $\beta_c$.}
@@ -416,7 +432,7 @@ We thus plot with the FDT theorem the susceptibility as function of $\beta$.
 
 Then we can compare the value of the susceptibility with the FDT and with a small non zero external field. 
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.6\linewidth]{susceptibility_ext_field_metropolis.png}
     \caption{Susceptibility as a function of $\beta$ with small external field. The red dashed line indicates the critical value $\beta_c$.}
