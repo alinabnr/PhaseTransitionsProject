@@ -72,14 +72,23 @@ For magnetization it is qualitatively the same. Metropolis shows a clear peak ce
 
 This qualitative difference motivates our finite-size scaling of $\tau$ at $\beta_c$ to extract the dynamic exponent $z$.
 
+\subsection{Finite-Size Scaling and Extraction of z}
 
-\subsection{Divergence near Criticality}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 0.55 \textwidth]{../plots/metropolis_fss_tau_vs_L.png}
+    \label{FSSMetropolis}
+    \caption[Finite-size scaling of integrated autocorrelation times for Metropolis updates]{Finite-size scaling of integrated autocorrelation time $\tau$ versus system size $L$ at criticality $\beta_c \approx 0.4407$ for energy (blue) and magnetization (orange) using Metropolis updates.}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width = 0.6 \textwidth]{../plots/wolff_fss_tau_vs_L.png}
+    \label{FSSWolff}
+    \caption[Finite-size scaling of integrated autocorrelation times for Wolff updates]{Finite-size scaling of integrated autocorrelation time $\tau$ versus system size $L$ at criticality $\beta_c \approx 0.4407$ for energy (blue) and magnetization (orange) using Wolff updates.}
+\end{figure}
 
 
-
-- Plot autocorrelation time \(\tau(T)\) vs. \(|T - T_c|\).
-
-- Fit \(\tau \sim |T - T_c|^{-z\nu}\) or equivalently \(\tau \sim L^{z}\) at \(T_c\) for finite-size scaling.
 
 - Extract dynamic critical exponents \(z_{\text{Metropolis}}\) and \(z_{\text{Wolff}}\)**.
 

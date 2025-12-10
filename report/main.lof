@@ -5,3 +5,5 @@
 \contentsline {figure}{\numberline {5}{\ignorespaces Susceptibility versus $\beta $ using Metropolis updates}}{13}{}%
 \contentsline {figure}{\numberline {6}{\ignorespaces Susceptibility versus $\beta $ using Wolff updates}}{14}{}%
 \contentsline {figure}{\numberline {7}{\ignorespaces Integrated autocorrelation functions for Metropolis and Wolff updates}}{14}{}%
+\contentsline {figure}{\numberline {8}{\ignorespaces Finite-size scaling of integrated autocorrelation times for Metropolis updates}}{15}{}%
+\contentsline {figure}{\numberline {9}{\ignorespaces Finite-size scaling of integrated autocorrelation times for Wolff updates}}{15}{}%
