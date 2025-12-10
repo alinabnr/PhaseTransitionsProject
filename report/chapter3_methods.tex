@@ -78,13 +78,14 @@ The steps of the algorithm are as follows \cite{CompAndCrit}:
   \item Move to the next site and return to step (3).
 \end{enumerate}
 
+
 \subsubsection{Wolff (cluster)} \label{section:WolffAlgo}
 
-Wolff proposed an alternative algorithm based on the Fortuin-Kasteleyn theorem in which single clusters are grown and flipped sequentially. The algorithm begins with the random choice of a single site. Bonds are then drawn to all nearest neighbors which are in the same state with probability 
+Wolff (\cite{WolffOGPaper}) proposed an alternative algorithm based on the Fortuin-Kasteleyn theorem in which single clusters are grown and flipped sequentially. The algorithm begins with the random choice of a single site. Bonds are then drawn to all nearest neighbors which are in the same state with probability 
 \begin{equation} \label{equ:WolffProb}
     p = 1-e^{-K\delta_{\sigma_i \sigma_j}}.
 \end{equation}
-One then moves to all sites in turn which have been connected to the initial
+One then moves to all sites which have been connected to the initial
 site and places bonds between them and any of their nearest neighbors which
 are in the same state with probability given by equation \ref{equ:WolffProb}. The process
 continues until no new bonds are formed and the entire cluster of connected
@@ -124,13 +125,11 @@ A convenient scalar measure of the memory of the Markov chain is the
 \tau_{\mathrm{int},A} = \frac{1}{2} + \sum_{t=1}^{T_{\max}} \rho_A(t),
 \end{equation}
 where the sum is truncated at a cutoff \(T_{\max}\) chosen e.g. by the window
-method (or until \(\rho_A(t)\) has decayed to noise). The statistical error
-of a sample mean \(\overline{A}\) computed from \(N\) recorded measurements
-is increased by autocorrelation; the effective sample size is \(N_\text{eff}\approx N/(2\tau_{\mathrm{int},A})\).
+method (or until \(\rho_A(t)\) has decayed to noise).
 
 In practice we estimate \(\tau_c(L)\) by the
 integrated autocorrelation time of the magnetization (or by the exponential
-autocorrelation time obtained from a fit of \(\rho(t)\approx e^{-t/\tau_{\exp}}\)),
+autocorrelation time obtained from a fit of \(\rho(t)\approx e^{-t/\tau_{\exp}}\),
 and then fit \(\log \tau_c\) versus \(\log L\) to extract \(z\):
 \begin{equation}
 \log \tau_c = z \log L + \text{const}.

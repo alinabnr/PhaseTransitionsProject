@@ -15,4 +15,7 @@ N.~Metropolis, A.~W. Rosenbluth, M.~N. Rosenbluth, A.~H. Teller, and E.~Teller, 
 K.~Christensen and N.~R. Moloney, {\em Complexity and Criticality}.
 \newblock Imperial College Press, 2005.
 
+\bibitem{WolffOGPaper}
+U.~Wolff, ``Collective monte carlo updating for spin systems,'' {\em Phys. Rev. Lett.}, vol.~62, pp.~361--364, Jan 1989.
+
 \end{thebibliography}
